@@ -401,8 +401,6 @@ This is the expected running-config for the configuration above.
 # show running-config
 ```
 ```{ .text .no-copy }
-Building configuration...
-username admin privilege 15 password encrypted 3ba58b9844aac9f884412464de6c9465d2235e1ed067958ede88d6c3f305392e2fd7f5a7e7fd98f349fd0d9b2b04622b85358efa990b7d753e6c118f2ebe21b2
 !
 vlan 1-4095
 !
