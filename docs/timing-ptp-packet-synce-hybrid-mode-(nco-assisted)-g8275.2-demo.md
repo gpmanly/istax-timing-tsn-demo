@@ -37,6 +37,13 @@ GNSS (NEO-M8T)
 
 Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 
+!!! Recommended
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+
 ```console
 # configure terminal
 ```
@@ -73,6 +80,13 @@ slave.
 ## 4 DUT3 configuration (EVB-LAN969x 24-Cu)
 
 Log-in as Admin to EVB-LAN969x 24-Cu using **`ICLI`**, then configure the following:
+
+!!! Recommended
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
 
 ```console
 # configure terminal

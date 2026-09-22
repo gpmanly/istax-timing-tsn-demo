@@ -78,3 +78,5 @@ extra_css:
 
 extra:
   generator: false
+
+site_url: https://gpmanly.github.io/istax-timing-tsn-demo/

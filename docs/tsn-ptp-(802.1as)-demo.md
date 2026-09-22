@@ -129,6 +129,13 @@ Apply the PTP portion of the following captured running configuration. Baseline 
 
 Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 
+!!! Recommended
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+
 ```console
 # configure terminal
 ```
@@ -171,7 +178,7 @@ Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 (config-if)#  ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)#  ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)#  ptp 0 gptp-interval 0
-(config-if)#  ptp 0 force-as-capable path-delay 0 
+(config-if)#  ptp 0 force-as-capable path-delay 1 
 (config-if)# exit
 
 (config)# interface GigabitEthernet 1/2
@@ -194,7 +201,7 @@ Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0 
+(config-if)# ptp 0 force-as-capable path-delay 1 
 (config-if)# exit
 
 (config)# interface GigabitEthernet 1/3
@@ -217,7 +224,7 @@ Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0 
+(config-if)# ptp 0 force-as-capable path-delay 1 
 (config-if)# exit
 
 (config)# interface GigabitEthernet 1/4
@@ -240,7 +247,7 @@ Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0 
+(config-if)# ptp 0 force-as-capable path-delay 1 
 (config-if)# exit
 (config)# exit
 ```

@@ -61,6 +61,13 @@ Configuration is done in **[u-center](https://www.u-blox.com/en/product/u-center
 
 Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 
+!!! Recommended
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+
 ```console
 # configure terminal
 ```
@@ -102,6 +109,10 @@ D ptp/1_pps 18:48:06 103/ptp_external_input_slave_function#1842: set new_t1 to f
 
 `io_pin_pps_in_slave_handler` is capturing real timestamps on io-pin 2 with no error, and `ptp_external_input_slave_function` is consuming them. **TP1 --> J13 wiring and switch-app config confirmed good, end-to-end.**
 
+> To stop the messages:
+```console
+# debug trace module level ptp 1_pps error
+```
 ### 5.2 ToD (RMC) confirmation
 
 ```console
@@ -115,6 +126,11 @@ D ptp/serial_1pps 18:50:50 82/ptp_1pps_convert_message_2_time#214: Successfully 
 I ptp/serial_1pps 18:50:50 82/ptp_1pps_serial_thread#324: time received     0 s_msb 1785912451 s           0 ns     0 ps
 N ptp/serial_1pps 18:50:50 82/ptp_1pps_serial_thread#316: Received: $GNZDA,064731.00,05,08,2026,00,00*74
 N ptp/serial_1pps 18:50:50 82/ptp_1pps_convert_message_2_time#170: Error encountered while parsing message from GPS. Was probably not an NMEA RMC message.
+```
+
+> To stop the messages:
+```console
+# debug trace module level ptp serial_1pps error
 ```
 
 ```console
