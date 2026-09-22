@@ -146,7 +146,8 @@ Once all three are met:
 
 ---
 
-## 7 Observed lock sequence on DUT3
+## 7 Results
+### 7.1 Observed lock sequence on DUT3
 
 ```console
 # show ptp 0 slave
@@ -166,10 +167,7 @@ Once all three are met:
 `CommState=SYNC` and `grant=-3` (8 packets/s) confirm the unicast session is
 established. The session renews automatically before the `duration 300` (5 min)
 expires.
-
----
-
-## 8 Diagnostic commands
+### 7.2 Diagnostic commands
 
 ```console
 # ! Check slave state and holdover
@@ -187,20 +185,7 @@ expires.
 
 ---
 
-## 9 Profile compatibility note
-
-Hybrid mode only works with **G.8275.2** (or G.8275.1). Other profiles:
-
-| Profile | Hybrid possible? | Reason |
-|---|---|---|
-| **G.8275.1 / G.8275.2** | **Yes** | auto adj-method → common → CLOCK_OPTION_SYNCE_DPLL |
-| G.8265.1 | No | explicit guard in code blocks hybrid |
-| IEEE 1588 / NO_PROFILE | No | auto adj-method → independent → CLOCK_OPTION_PTP_DPLL |
-| 802.1AS | No | auto adj-method → ltc |
-
----
-
-## 10 Notes
+## 8 Notes
 
 - **Unicast grant renewal**: `duration 300` means the slave re-requests every ~5 min.
   If the master is unreachable at renewal time, `CommState` drops back to `INIT`.
@@ -219,3 +204,14 @@ Hybrid mode only works with **G.8275.2** (or G.8275.1). Other profiles:
 - **SyncE `show synce` invalid on some builds**: If `show synce` returns "Invalid word",
   SyncE module may not be compiled in or the command is build-specific. Use
   `show ptp 0 slave` to confirm lock state instead.
+
+### 8.2 Profile Compatibility 
+
+Hybrid mode only works with **G.8275.2** (or G.8275.1). Other profiles:
+
+| Profile                 | Hybrid possible? | Reason                                                |
+| ----------------------- | ---------------- | ----------------------------------------------------- |
+| **G.8275.1 / G.8275.2** | **Yes**          | auto adj-method → common → CLOCK_OPTION_SYNCE_DPLL    |
+| G.8265.1                | No               | explicit guard in code blocks hybrid                  |
+| IEEE 1588 / NO_PROFILE  | No               | auto adj-method → independent → CLOCK_OPTION_PTP_DPLL |
+| 802.1AS                 | No               | auto adj-method → ltc                                 |

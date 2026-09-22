@@ -119,7 +119,8 @@ Once all three are met:
 
 ---
 
-## 6 Observed lock sequence on DUT3
+## 6 Results
+### 6.1 Observed lock sequence on DUT3
 
 ```console
 # show ptp 0 slave
@@ -136,9 +137,7 @@ Once all three are met:
   → single-digit ns                       (locked)
 ```
 
----
-
-## 7 Diagnostic commands
+### 6.2 Diagnostic commands
 
 ```console
 # ! Check slave state and holdover
@@ -156,7 +155,9 @@ Once all three are met:
 
 ---
 
-## 8 Profile compatibility note
+## 7 Notes
+
+### 7.1 Profile Compatibility 
 
 Hybrid mode only works with **G.8275.1** (or G.8275.2). Other profiles:
 
@@ -169,9 +170,7 @@ Hybrid mode only works with **G.8275.1** (or G.8275.2). Other profiles:
 
 Forcing `preferred-adj common` with IEEE 1588 profile technically reaches the hybrid branch but is unsupported.
 
----
-
-## 9 Notes
+### 7.2 Others
 
 - **Startup OOS transient (PCB135 / LAN8814 ports)**: At boot, some PHY LTC ports may
   briefly show `Port-Timer: OutOfSync` and stay `dsbl` for minutes due to a mod_man
