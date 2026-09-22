@@ -1,0 +1,80 @@
+site_name: IStaX Timing and TSN Demo
+nav:
+  - Home: index.md
+  - Timing Demo:
+      - GNSS Timing Integration: timing-gnss-integration-demo.md
+      - G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode: timing-ptp-packet-synce-hybrid-mode-(nco-assisted)-g.8275.1-demo.md
+      - G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode: timing-ptp-packet-synce-hybrid-mode-(nco-assisted)-g8275.2-demo.md
+      - G.8273.2 Telecom PTP Performance Demo: timing-itu-t-g.8273.2-demo.md
+      - PTP Boundary Clock Demo: timing-ptp-boundary-clock-demo.md
+  - TSN Demo:
+      - TSN Precision Time Protocol (802.1AS/gPTP): tsn-ptp-(802.1as)-demo.md
+      - TSN Traffic Generator: tsn-traffic-generator.md
+      - TSN Credit-Based Shaper (CBS): tsn-credit-based-haper-(cbs)-demo.md
+      - TSN Time-Aware Shaping (TAS): tsn-time-aware-shaping-(tas)-demo.md
+      - TSN Per-Stream Filtering and Policing (PSFP): tsn-per-stream-filtering-and-policing-(psfp)-demo.md
+
+theme:
+  name: material
+  logo: assets/MCHP.png
+  favicon: assets/favicon.ico
+  highlightjs: true
+  hljs_languages:
+    - c
+    - shell
+    - bash
+    - console
+  features:
+    - content.code.copy
+    - navigation.footer
+    - header.autohide
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+plugins:
+  - search
+  - glightbox
+  - offline
+
+markdown_extensions:
+  - toc:
+  - admonition
+  - attr_list
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.keys
+
+extra_javascript:
+  - javascripts/custom.js
+
+extra_css:
+  - stylesheets/custom.css
+
+extra:
+  generator: false

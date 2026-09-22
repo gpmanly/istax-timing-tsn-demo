@@ -1,0 +1,42 @@
+# ==========================================
+# MkDocs Core
+# ==========================================
+# Exclude the default build output directory
+site/
+
+# ==========================================
+# Theme & Plugin Caches
+# ==========================================
+# Material for MkDocs build caches and logs
+.cache/
+*.log
+*.cpuprofile
+
+# ==========================================
+# Python Environments & Dependencies
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# Package manager lock files (if you prefer to rebuild fresh dependencies)
+# Remove these if you intentionally want to lock strict versions in CI/CD
+uv.lock
+pdm.lock
+
+# ==========================================
+# Operating System & IDEs
+# ==========================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
