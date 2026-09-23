@@ -139,6 +139,8 @@ If additional generator instances join the test, give them the same synchronizat
 ![input-graph-1](assets/tsn-psfp-graph-input-lo.jpg)
 *Graph that shows the input of the misbehaving traffic.*
 
+---
+
 !!! info
 
 	Clear all switch configuration back to default but keep the switch's IP address
@@ -147,7 +149,6 @@ If additional generator instances join the test, give them the same synchronizat
 	```
 	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
 
----
 ## 5 Streams and Stream Collections
 
 A stream is an ingress property, where a subset of traffic gets identified by certain frame properties, such as DMAC, SMAC, VLAN tags, and layer 3 properties.
