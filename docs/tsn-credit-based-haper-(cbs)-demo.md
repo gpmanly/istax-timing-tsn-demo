@@ -173,6 +173,9 @@ PTP is not required for CBS credit accounting itself; it is used here to align t
 5. On EP1, press lowercase `s` or select **Start**. EP1 broadcasts the command through its first configured port (`eth1`), and both instances schedule transmission for the same target time, 150 ms later.
 6. When the test interval is complete, leave the Sync latch enabled and press `s` or select **Stop** on EP1 to schedule a synchronized stop on both instances.
 
+## 4 TSN Switch Configuration (VSC5641EV)
+
+
 !!! info
 
 	Clear all switch configuration back to default but keep the switch's IP address
@@ -180,8 +183,7 @@ PTP is not required for CBS credit accounting itself; it is used here to align t
 	# reload defaults keep-ip force
 	```
 	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
-## 4 TSN Switch Configuration (VSC5641EV)
-
+	
 ### 4.1 QoS Requirement, Tag Classification
 
 Apply Tag Classification

@@ -187,6 +187,14 @@ Complete [TSN Precision Time Protocol (802.1AS/gPTP)](tsn-ptp-(802.1as)-demo.md)
 
 A repeating gate-control list can appear to operate while the switch is free-running, but that only demonstrates local cycling. It does not prove that the gate phase is aligned to other time-aware devices. Record the switch PTP state and stable endpoint `s2` state with the TAS evidence.
 
+!!! info
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
+
 ### 4.2 QoS Requirement
 
 Apply Tag Classification
