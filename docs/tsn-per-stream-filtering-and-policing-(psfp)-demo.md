@@ -141,6 +141,8 @@ If additional generator instances join the test, give them the same synchronizat
 
 ---
 
+## 5 TSN Switch Configuration
+
 !!! info
 
 	Clear all switch configuration back to default but keep the switch's IP address
@@ -149,7 +151,7 @@ If additional generator instances join the test, give them the same synchronizat
 	```
 	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
 
-## 5 Streams and Stream Collections
+### 5.1 Streams and Stream Collections
 
 A stream is an ingress property, where a subset of traffic gets identified by certain frame properties, such as DMAC, SMAC, VLAN tags, and layer 3 properties.
 
@@ -157,7 +159,7 @@ Streams are used by two other TSN protocols described later. One is Per-Stream F
 
 Multiple streams can be bundled into a stream collection, which may be used in both PSFP and FRER, as we shall see later.
 
-### 5.1 Stream Configuration
+#### 5.1.1 Stream Configuration
 A stream is essentially a set of matching criteria.A frame belongs to the stream only if all configured criteria match.
 
 For example:
@@ -193,7 +195,7 @@ In **`ICLI`**:
 - `stream_mid`'s `mid_pri` template uses UDP dport 30001, which does not match Stream 2. EP2's well-behaved traffic therefore never gets classified into a PSFP stream at all, so it never enters the PSFP pipeline , it is forwarded purely on its QoS/PCP marking. This is what makes it the "unimpeded" traffic referenced in the Objective.
 - GigabitEthernet 1/1 and 1/2 also apply `stream-id 1` at the interface, and 1/3 applies `stream-id 1` as well, but no `stream 1` block exists at the global level in this running-config , that binding is a leftover reference with nothing to match against, so it has no effect here. The `stream-id 2` binding on 1/1 and 1/2 is what actually activates Stream 2 classification at ingress.
 
-### 5.2 Stream Collection Configuration
+#### 5.1.2 Stream Collection Configuration
 A Stream Collection groups streams together.
 Instead of configuring filters for each stream individually:
 
@@ -215,7 +217,7 @@ and apply one PSFP filter to the collection.
 **In this demo**, stream collections are not used , the running-config has no `stream-collection` block, and `tsn stream filter 1` references Stream 2 directly by `stream-id`.
 
 ---
-## 6 Flow Meter Configuration
+### 5.2 Flow Meter Configuration
 
 **CIR (Committed Information Rate)**
 - The guaranteed traffic rate that a stream is allowed to send.
@@ -303,7 +305,7 @@ In **`ICLI`**:
 - **mark-red-enable**: not configured , red (non-conforming) frames are dropped individually; a single violation does not shut the meter down for subsequent frames.
 
 ---
-## 7 Stream Gate Configuration
+### 5.3 Stream Gate Configuration
 
 A Stream Gate in IEEE 802.1Qci PSFP acts like a time-based traffic gate. It controls when a stream is allowed to pass and can optionally change priority or block streams that violate rules.
 
@@ -384,7 +386,7 @@ In **`ICLI`**:
 The stream gate executes from the switch's local time base. The recurring 90/10 duty cycle can be observed on one switch without comparing absolute phase, but alignment with external talkers, listeners, or another scheduled bridge requires a shared clock. Use [TSN Precision Time Protocol (802.1AS/gPTP)](tsn-ptp-(802.1as)-demo.md) to establish and verify that time base before making cross-device phase claims. The flow meter's token-bucket operation does not itself require PTP.
 
 ---
-## 8 Stream Filter Configuration
+### 5.4 Stream Filter Configuration
 
 A Stream Filter in IEEE 802.1Qci PSFP is the component that links a stream to policing (Flow Meter) and scheduling (Stream Gate). Think of it as the "glue" that determines which stream is controlled and what actions are applied to it.
 
@@ -424,7 +426,7 @@ In **`ICLI`**:
 - **max-sdu**: not configured , not used in this demo; frame size is not separately capped beyond what policing already implies.
 
 ---
-## 9 TSN Switch Configuration
+### 5.5 TSN Switch's Running-config
 
 This is the expected running-config for the configuration above.
 
@@ -617,7 +619,7 @@ end
 ```
 
 ---
-## 10 Expected Behavior
+## 6 Expected Behavior
 
 - `stream_lo` (UDP dport 20001, mean 20 Mbps sinusoid swinging between ~10 Mbps and ~30 Mbps over a 5 s period) is classified into Stream 2, which is matched by `tsn stream filter 1` and therefore runs through both Flow Meter 1 and Stream Gate 1:
     - **Flow Meter 1** admits traffic as green up to the 20 Mbps CIR, with roughly 8 KB of burst headroom (CBS) before tokens run out. Once the sine wave pushes the instantaneous rate above ~20 Mbps for long enough to drain the bucket, further packets have no tokens available , since EIR/EBS are unset, there is no yellow tier, so those packets are marked red and dropped individually (no persistent shutoff, since `mark-red-enable` is disabled).
@@ -628,7 +630,7 @@ end
 - Taken together, this demonstrates the Objective: the switch's per-stream policing (Flow Meter 1) and gating (Stream Gate 1) contain EP1's misbehaving traffic without affecting EP2's well-behaved traffic, even though the combined offered load can exceed the EP3 link's capacity.
 
 ---
-## 11 Results
+## 7 Results
 
 Capture: `wireshark-eth2-psfp.pcapng`, taken on `eth2` at EP3 (the receiver), ~21.6 s / 85 k packets, spanning about four full 5 s sine periods of `stream_lo`.
 
