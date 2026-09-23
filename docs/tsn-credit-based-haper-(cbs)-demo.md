@@ -173,6 +173,13 @@ PTP is not required for CBS credit accounting itself; it is used here to align t
 5. On EP1, press lowercase `s` or select **Start**. EP1 broadcasts the command through its first configured port (`eth1`), and both instances schedule transmission for the same target time, 150 ms later.
 6. When the test interval is complete, leave the Sync latch enabled and press `s` or select **Stop** on EP1 to schedule a synchronized stop on both instances.
 
+!!! info
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
 ## 4 TSN Switch Configuration (VSC5641EV)
 
 ### 4.1 QoS Requirement, Tag Classification
@@ -187,6 +194,8 @@ In the web, navigate to QoS → Port Classification and configure the following:
 
 Apply on all three talker-facing ingress ports (Gi1/1 to Gi1/3). `qos trust tag` alone is not enough: the default PCP-to-queue mapping on this switch does not map PCP 0 to queue 0 or PCP 1 to queue 1, so those two mappings need an explicit `qos map tag-cos` line each, for example on Gi1/1:
 
+In **`ICLI`**, the configuration is as follows:
+
 ```console
 # configure terminal
 (config)# interface GigabitEthernet 1/1
@@ -195,7 +204,31 @@ Apply on all three talker-facing ingress ports (Gi1/1 to Gi1/3). `qos trust tag`
 (config-if)# qos map tag-cos pcp 0 dei 1 cos 0 dpl 1
 (config-if)# qos map tag-cos pcp 1 dei 0 cos 1 dpl 0
 (config-if)# qos map tag-cos pcp 1 dei 1 cos 1 dpl 1
-(config-if)# end
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/2
+(config-if)# qos trust tag
+(config-if)# qos map tag-cos pcp 0 dei 0 cos 0 dpl 0
+(config-if)# qos map tag-cos pcp 0 dei 1 cos 0 dpl 1
+(config-if)# qos map tag-cos pcp 1 dei 0 cos 1 dpl 0
+(config-if)# qos map tag-cos pcp 1 dei 1 cos 1 dpl 1
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/3
+(config-if)# qos trust tag
+(config-if)# qos map tag-cos pcp 0 dei 0 cos 0 dpl 0
+(config-if)# qos map tag-cos pcp 0 dei 1 cos 0 dpl 1
+(config-if)# qos map tag-cos pcp 1 dei 0 cos 1 dpl 0
+(config-if)# qos map tag-cos pcp 1 dei 1 cos 1 dpl 1
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/4
+(config-if)# qos trust tag
+(config-if)# qos map tag-cos pcp 0 dei 0 cos 0 dpl 0
+(config-if)# qos map tag-cos pcp 0 dei 1 cos 0 dpl 1
+(config-if)# qos map tag-cos pcp 1 dei 0 cos 1 dpl 0
+(config-if)# qos map tag-cos pcp 1 dei 1 cos 1 dpl 1
+(config-if)# exit
 ```
 
 The same four `qos map tag-cos` lines go on Gi1/2 and Gi1/3 as well, since all three talker ports need the same PCP-to-queue mapping. With this in place, low (PCP 0) goes to queue 0, medium (PCP 5) and high (PCP 7) go to queue 5 and queue 7 as expected without needing an explicit map, since PCP 5 and PCP 7 already map to their matching queue by default. Without `trust tag`, every stream lands in queue 0 and the three classes collapse together before reaching Gi1/4. `trust tag` and these maps are only needed on the ingress ports; Gi1/4 only sends traffic out in this test, so it does not need them.
@@ -209,6 +242,8 @@ In the web, navigate to QoS → Port Shaping and configure the following:
 ![Configuration 1](assets/tsn-cbs-conf-2.jpg)
 
 CBS is configured on the egress port, Gi1/4. This is the current, live config on the switch, confirmed with `show running-config interface GigabitEthernet 1/4`:
+
+In **`ICLI`**, the configuration is as follows:
 
 ```console
 # configure terminal

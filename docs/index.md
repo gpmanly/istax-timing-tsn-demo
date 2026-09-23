@@ -13,6 +13,7 @@ Use the timing demonstrations to establish and verify a stable network time refe
 - [G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode](timing-ptp-packet-synce-hybrid-mode-(nco-assisted)-g8275.2-demo.md)
 - [G.8273.2 Telecom PTP Performance Demo](timing-itu-t-g.8273.2-demo.md)
 - [PTP Boundary Clock Demo](timing-ptp-boundary-clock-demo.md)
+- [PTP Transparent Clock Demo](timing-ptp-transparent-clock-demo.md)
 
 ### TSN Demo
 

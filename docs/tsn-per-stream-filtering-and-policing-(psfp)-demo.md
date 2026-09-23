@@ -8,6 +8,7 @@ This problem is particularly critical in Time-Sensitive Networking (TSN) environ
 
 This showcase demonstrates per-stream policing in TSN using a token bucket mechanism. Token bucket policing provides a deterministic method for traffic control that enforces long-term bandwidth limits while allowing controlled short-term traffic bursts. The scenario implements two clients: one generating excessive traffic and another generating normal traffic. We show how token bucket policing effectively limits the excessive traffic while allowing normal traffic to flow unimpeded.
 
+---
 ## 2 Background
 
 Per-Stream Filtering and Policing (PSFP), as defined in the IEEE 802.1Qci standard, provides filtering, policing and service class selection for a stream.
@@ -21,6 +22,7 @@ A PSFP stream filter references sub-components to make up the entire stream filt
 A stream or stream collection may only be referenced by one stream filter.
 Both flow meters and stream gates may be referenced by more than one stream filter.
 
+---
 ## 3 Test Topology
 
 The network consists of two end-points devices that send traffic streams to another end-point through a TSN switch:
@@ -34,6 +36,7 @@ The combined traffic from both clients occasionally exceeds the link capacity be
 
 ![Block Diagram](assets/tsn-psfp-demo-block-diagram.png)
 
+---
 ## 4 Traffic Generator Configuration
 
 Use the `tsn-traffic-gen` application described in [Generating a Traffic Stream](tsn-traffic-generator.md) to load and run the following configuration. Review the ports, templates, and streams in the TUI before starting transmission.
@@ -135,7 +138,18 @@ If additional generator instances join the test, give them the same synchronizat
 
 ![input-graph-1](assets/tsn-psfp-graph-input-lo.jpg)
 *Graph that shows the input of the misbehaving traffic.*
+
+!!! info
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+	**Apply the [802.1AS/gPTP Configuration](tsn-ptp-%28802.1as%29-demo.md#6-tsn-switch-configuration-vsc5641ev)**
+
+---
 ## 5 Streams and Stream Collections
+
 A stream is an ingress property, where a subset of traffic gets identified by certain frame properties, such as DMAC, SMAC, VLAN tags, and layer 3 properties.
 
 Streams are used by two other TSN protocols described later. One is Per-Stream Filtering and Policing and the other is Frame Replication and Elimination for Reliability.
@@ -153,6 +167,7 @@ stream 10
 ```
 
 A frame must match both:
+
 - Destination MAC = `01:02:03:04:05:06`
 - Destination Port = `20001`
 
@@ -164,7 +179,7 @@ to be classified into Stream 10.
 
 ![stream-config-2](assets/tsn-psfp-streams-conf-2.jpg)
 
-The running-config defines one stream:
+In **`ICLI`**:
 
 ```console
 # configure terminal
@@ -198,6 +213,7 @@ and apply one PSFP filter to the collection.
 
 **In this demo**, stream collections are not used , the running-config has no `stream-collection` block, and `tsn stream filter 1` references Stream 2 directly by `stream-id`.
 
+---
 ## 6 Flow Meter Configuration
 
 **CIR (Committed Information Rate)**
@@ -264,6 +280,8 @@ The flow can use up to 15 Mbps temporarily if excess capacity is available.
 
 ![Flow-Meter-Conf-1](assets/tsn-psfp-flowmeter-conf-1.jpg)
 
+In **`ICLI`**:
+
 ```console
 # configure terminal
 (config)# tsn flow meter 1
@@ -271,6 +289,9 @@ The flow can use up to 15 Mbps temporarily if excess capacity is available.
 (config-flow-meter)# cbs 8192
 (config-flow-meter)# end
 ```
+
+!!! note
+	An error may encounter when configuring flow meter with `ICLI`. If so, use the Web configuration instead. 
 
 - **CIR = 20000 kbps (20 Mbps)** , matches the mean rate of `stream_lo` in the traffic generator (`mbps=20`), so the meter's committed rate is set to exactly the average rate the misbehaving stream targets before its sinusoidal swings push it up to ~30 Mbps and down to ~10 Mbps.
 - **CBS = 8192 bytes (8 KB)** , about eight of `stream_lo`'s 1000-byte packets, giving a small amount of burst tolerance before excess traffic is penalized.
@@ -280,7 +301,9 @@ The flow can use up to 15 Mbps temporarily if excess capacity is available.
 - **drop-on-yellow**: not applicable here since EIR/EBS are unset, so no yellow frames are ever produced.
 - **mark-red-enable**: not configured , red (non-conforming) frames are dropped individually; a single violation does not shut the meter down for subsequent frames.
 
+---
 ## 7 Stream Gate Configuration
+
 A Stream Gate in IEEE 802.1Qci PSFP acts like a time-based traffic gate. It controls when a stream is allowed to pass and can optionally change priority or block streams that violate rules.
 
 It is a programmable traffic light for TSN streams, where the Control List defines when the light is red (closed) or green (open), and optionally which priority lane the traffic should use.
@@ -337,6 +360,8 @@ It is a programmable traffic light for TSN streams, where the Control List defin
 
 ![Stream-gate-Conf-2](assets/tsn-psfp-streamgate-conf-2.jpg)
 
+In **`ICLI`**:
+
 ```console
 # configure terminal
 (config)# tsn stream gate 1
@@ -357,7 +382,9 @@ It is a programmable traffic light for TSN streams, where the Control List defin
 
 The stream gate executes from the switch's local time base. The recurring 90/10 duty cycle can be observed on one switch without comparing absolute phase, but alignment with external talkers, listeners, or another scheduled bridge requires a shared clock. Use [TSN Precision Time Protocol (802.1AS/gPTP)](tsn-ptp-(802.1as)-demo.md) to establish and verify that time base before making cross-device phase claims. The flow meter's token-bucket operation does not itself require PTP.
 
+---
 ## 8 Stream Filter Configuration
+
 A Stream Filter in IEEE 802.1Qci PSFP is the component that links a stream to policing (Flow Meter) and scheduling (Stream Gate). Think of it as the "glue" that determines which stream is controlled and what actions are applied to it.
 
 **stream-id**
@@ -380,6 +407,8 @@ A Stream Filter in IEEE 802.1Qci PSFP is the component that links a stream to po
 
 ![Stream-filter-Conf-1](assets/tsn-psfp-filters-conf-1.jpg)
 
+In **`ICLI`**:
+
 ```console
 # configure terminal
 (config)# tsn stream filter 1
@@ -393,7 +422,8 @@ A Stream Filter in IEEE 802.1Qci PSFP is the component that links a stream to po
 - **flow-meter id 1** and **gate id 1** are both attached, so Stream 2 traffic passes through both policing (CIR 20 Mbps / CBS 8 KB) and gating (90 ms open / 10 ms closed) before reaching the egress queues.
 - **max-sdu**: not configured , not used in this demo; frame size is not separately capped beyond what policing already implies.
 
-## 9 TSN Configuration
+---
+## 9 TSN Switch Configuration
 
 This is the expected running-config for the configuration above.
 
@@ -585,6 +615,7 @@ end
 #
 ```
 
+---
 ## 10 Expected Behavior
 
 - `stream_lo` (UDP dport 20001, mean 20 Mbps sinusoid swinging between ~10 Mbps and ~30 Mbps over a 5 s period) is classified into Stream 2, which is matched by `tsn stream filter 1` and therefore runs through both Flow Meter 1 and Stream Gate 1:
@@ -595,6 +626,7 @@ end
 - Because `stream_mid` also carries a higher PCP (5) than `stream_lo` (0), it additionally benefits from queue priority at egress, reinforcing its isolation from any congestion `stream_lo`'s excess traffic would otherwise cause.
 - Taken together, this demonstrates the Objective: the switch's per-stream policing (Flow Meter 1) and gating (Stream Gate 1) contain EP1's misbehaving traffic without affecting EP2's well-behaved traffic, even though the combined offered load can exceed the EP3 link's capacity.
 
+---
 ## 11 Results
 
 Capture: `wireshark-eth2-psfp.pcapng`, taken on `eth2` at EP3 (the receiver), ~21.6 s / 85 k packets, spanning about four full 5 s sine periods of `stream_lo`.

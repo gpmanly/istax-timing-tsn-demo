@@ -7,3 +7,52 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
+
+.md-content {
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.md-grid {
+  max-width: 75%; 
+}
+
+/* ---- LIGHT MODE ---- */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:             #1C355E; /* Pantone 7686 - Primary blue */
+  --md-primary-fg-color--light:      #2E4A78;
+  --md-primary-fg-color--dark:       #101820; /* Black 6C */
+  --md-primary-bg-color:             #FFFFFF;
+  --md-primary-bg-color--light:      #FFFFFF;
+
+  --md-accent-fg-color:              #DA291C; /* Pantone 485C - Red */
+  --md-accent-fg-color--transparent: #DA291C1a;
+  --md-accent-bg-color:              #FFFFFF;
+  --md-accent-bg-color--light:       #FFFFFF;
+
+  /* Typeset (link) accent */
+  --md-typeset-a-color:              #1C355E;
+}
+
+/* ---- DARK MODE (slate) ---- */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:             #101820; /* Black 6C as dark surface */
+  --md-primary-fg-color--light:      #1C355E;
+  --md-primary-fg-color--dark:       #000000;
+  --md-primary-bg-color:             #F68D2E; /* orange for contrast on dark header */
+
+  --md-accent-fg-color:              #41B6E6; /* Pantone 298C - lighter blue reads better on dark */
+  --md-accent-fg-color--transparent: #41B6E61a;
+
+  --md-typeset-a-color:              #41B6E6;
+
+  /* Optional: tint the slate background/surface using your palette instead of default gray-blue */
+  --md-default-bg-color:             #101820;
+  --md-default-fg-color:             #D1DDE6; /* Pantone 642C for body text on dark */
+  --md-default-fg-color--light:      #949A90; /* Pantone 7538C for secondary text */
+}
+
+[data-md-color-scheme="slate"] .md-content {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}

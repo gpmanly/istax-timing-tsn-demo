@@ -37,6 +37,13 @@ DUT1 slaves its virtual port to the GNSS 1PPS and acts as grandmaster (class 6, 
 
 Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 
+!!! tip
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
+
 ```console
 # configure terminal
 ```
@@ -73,6 +80,13 @@ Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 ## 4 EVB-LAN9668 (DUT2) Configuration
 
 Log-in as Admin to EVB-LAN9668 using **`ICLI`**, then configure the following:
+
+!!! tip
+
+	Clear all switch configuration back to default but keep the switch's IP address
+	```console
+	# reload defaults keep-ip force
+	```
 
 ```console
 # configure terminal
@@ -111,7 +125,7 @@ Log-in as Admin to EVB-LAN9668 using **`ICLI`**, then configure the following:
 
 ## 5 Verification
 
-**PCB135, check grandmaster state:**
+### 5.1 PCB135, check grandmaster state:
 ```console
 # show ptp 0 slave
 ```
@@ -130,6 +144,8 @@ stpRm  OffsetFromMaster    MeanPathDelay
 1       0.000,000,000,171   0.000,000,000,000
 ```
 `stpRm=1`, one step removed from the GNSS grandmaster (virtual port). `OffsetFromMaster` of ~171 ps confirms the BC is tightly locked to its own virtual port.
+
+### 5.2 PCB135, check port state:
 
 ```console
 # show ptp 0 port-state
@@ -152,7 +168,7 @@ Parent / GM: ca:69:dd:ff:fe:e9:bb:bd  (= virtual port)
 GM quality:  Cl:006  Ac:100 ns  Va:65535
 ```
 
-**EVB-LAN9668, check slave state:**
+### 5.3 EVB-LAN9668, check slave state:
 ```console
 # show ptp 0 slave
 ```
@@ -218,6 +234,8 @@ show ptp 0 port-state  (active ports only)
   Port 58: slve (VP)   <- locked to GNSS virtual port
 ```
 
+DUT1 is correctly locked to the GNSS-referenced virtual port: the 171 ps offset is effectively zero at this measurement scale. Its boundary-clock port is up and acting as a master, so it is re-originating PTP time for the downstream device with the GNSS grandmaster quality (class 6, 100 ns accuracy).
+
 ### 6.2 EVB-LAN9668 (DUT2)
 
 ```{ .text .no-copy }
@@ -234,6 +252,8 @@ show ptp 0 port-state
 show ptp 0 slave
   Slave port: 2   Slave state: PHASE_LOCKED   Holdover: N/A
 ```
+
+DUT2 has successfully selected DUT1 as its parent and is phase-locked. The `stpRm` value of 2 reflects the two clock steps from the GNSS virtual port through DUT1 to DUT2. The approximately 3.4 ns offset and 8.6 ns mean path delay are consistent with a direct cable and one-step hardware timestamping, demonstrating accurate time transfer across the boundary-clock hop.
 
 ---
 

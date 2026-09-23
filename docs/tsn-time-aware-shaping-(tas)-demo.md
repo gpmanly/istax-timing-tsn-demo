@@ -174,6 +174,7 @@ Both generator instances use the same `test_id`, `sync_port`, and `sync_lead_ms`
 6. When the capture interval is complete, leave the Sync latch enabled and press `s` or select **Stop** on EP1 to schedule a synchronized stop on both instances.
 
 ### 3.4 How the Talker Configuration Fits the Test
+
 EP1 is a single traffic generator running two streams at once: `stream_lo` out its `tx` port (`eth1`, VLAN PCP 0, UDP destination port 20001) and `stream_mid` out its `tx0` port (`eth2`, VLAN PCP 5, UDP destination port 30001). EP2 is a second traffic generator running one stream, `stream_hi`, out its `tx` port (`eth1`, VLAN PCP 7, UDP destination port 10001). All three streams are generated at 900 Mbps with 1000-byte packets, so each is individually capable of saturating a gigabit link. This makes the TAS gating visible: without a schedule, three simultaneous 900 Mbps streams would contend for the same 1 Gbps egress port.
 
 Each of the three talker ports (EP1's two ports, EP2's one port) connects to a separate switch ingress port, Gi1/1–Gi1/3. With `qos trust tag` configured on those ports (§4.2), the switch classifies each stream directly from its VLAN PCP into the matching queue PCP 0 → queue 0 (low), PCP 5 → queue 5 (mid), PCP 7 → queue 7 (high) with no dependency on the UDP ports used in the streams themselves. All three queues converge on the shared egress port, Gi1/4, which is the only port with `tsn tas gate-enabled` and the 40 ms/30 ms/30 ms gate schedule (§4.3). That convergence point is also where both Wireshark captures (`wireshark-eth2.csv`, `wireshark-eth2-no-tas.csv`) are taken, and where the UDP destination port is used purely as a post-capture filter to sort packets back into their priority class.
@@ -199,6 +200,28 @@ In the web, navigate to QoS → Port Classification and configure the following:
 
 Applied identically to all three talker-facing ingress ports, this uses the default PCP-to-queue mapping (PCP *n* → queue *n*) so that each stream is classified into the queue matching its tagged PCP (low → queue 0, medium → queue 5, high → queue 7).
 
+In **`ICLI`**, the configuration is as follows:
+
+```console
+# configure terminal
+(config)# interface GigabitEthernet 1/1
+(config-if)# qos trust tag
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/2
+(config-if)# qos trust tag
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/3
+(config-if)# qos trust tag
+(config-if)# exit
+#
+(config)# interface GigabitEthernet 1/4
+(config-if)# qos trust tag
+(config-if)# exit
+(config)# exit
+```
+
 **Why this is mandatory for TAS**: `qos trust tag` sets the port's `trust_tag` field (`vtss_appl/include/vtss/appl/qos.h`), which is `FALSE` by default (`qos.cxx`). It flows into the MESA `tag.class_enable` bit and ultimately the chip's `PCP_DEI_QOS_ENA` register bit (`vtss_fa_qos.c`). When that bit is off, the ingress classifier ignores the frame's PCP entirely and puts *every* frame on the port into a single default queue (`default_cos`, itself 0 by default) regardless of PCP. TAS gate-control-list entries key strictly on queue number (`tsn tas control-list index N gate-state queue <0-7>`) with no PCP awareness of their own, so without trust-tag all three streams would collapse into queue 0 and share one gate window, destroying the isolation under test.
 
 ### 4.3 Time Aware Shaper (TAS) Configuration
@@ -223,11 +246,13 @@ Finally, when port 1 is configured, activate the configuration using the "Config
 
 ![Configuration 3](assets/tsn-tas-demo-conf-3.jpg)
 
-The commands below configure gPTP (802.1AS) on all four ports, trust the ingress tag on the three talker-facing ports (Gi1/1–Gi1/3), and program the 40 ms / 30 ms / 30 ms TAS gate schedule on the shared egress port (Gi1/4).
+In **`ICLI`**, the commands below configure gPTP (802.1AS) on all four ports, trust the ingress tag on the three talker-facing ports (Gi1/1–Gi1/3), and program the 40 ms / 30 ms / 30 ms TAS gate schedule on the shared egress port (Gi1/4).
 
 ```console
 # configure terminal
+```
 
+```console
 (config)# ! Disable always-guard-band globally (guard band only applied to preemptible queues)
 (config)# no tsn tas always-guard-band
 
@@ -265,7 +290,7 @@ The commands below configure gPTP (802.1AS) on all four ports, trust the ingress
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0
+(config-if)# ptp 0 force-as-capable path-delay 1
 (config-if)# exit
 
 ! --- Gi1/2: medium-priority talker-facing ingress port ---
@@ -291,7 +316,7 @@ The commands below configure gPTP (802.1AS) on all four ports, trust the ingress
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0
+(config-if)# ptp 0 force-as-capable path-delay 1
 (config-if)# exit
 
 ! --- Gi1/3: high-priority talker-facing ingress port ---
@@ -317,7 +342,7 @@ The commands below configure gPTP (802.1AS) on all four ports, trust the ingress
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0
+(config-if)# ptp 0 force-as-capable path-delay 1
 (config-if)# exit
 
 ! --- Gi1/4: shaped egress port. This is where TAS is actually applied ---
@@ -344,7 +369,7 @@ The commands below configure gPTP (802.1AS) on all four ports, trust the ingress
 (config-if)# ptp 0 usemgtSettableLogPdelayReqInterval 1
 (config-if)# ptp 0 useMgtSettableLogGptpCapableMessageInterval 1
 (config-if)# ptp 0 gptp-interval 0
-(config-if)# ptp 0 force-as-capable path-delay 0
+(config-if)# ptp 0 force-as-capable path-delay 1
 
 ! Guard-band sizing for the express (queue 7) and best-effort (queue 0) traffic classes
 (config-if)# tsn tas max-sdu queue 0 1000
@@ -433,9 +458,7 @@ end
 #
 ```
 
-Additional TAS status can be confirmed per-port with `show tsn tas status interface GigabitEthernet 1/4` (see AN1185 §Time Aware Shaper for expected field layout: `GateEnabled: TRUE`, `OperControlListLength: 3`, and the three `GateControlEntry` lines matching the schedule above).
-
-NOTE: this walkthrough omits `GigabitEthernet 1/1`'s leftover `tsn tas max-sdu queue 0 1000` / `tsn tas max-sdu queue 7 1000` lines seen in the originally captured config since `tsn tas gate-enabled` was never set on that interface, those values are inert (max-sdu only affects guard-band calculation on a gated port) and should not be reproduced. Likewise, `voice vlan`, `spanning-tree mst`, `spanning-tree aggregation`, and the admin-user line from the captured config are baseline switch management settings unrelated to the TAS demo and are omitted here; see the full switch export for the complete config if needed.
+Additional TAS status can be confirmed per-port with `show tsn tas status interface GigabitEthernet 1/4` 
 
 ## 5 Expected Behavior
 
@@ -454,9 +477,10 @@ Pass criteria: Capture 1 (TAS enabled) must reproduce this 40/30/30 ms sequentia
 ### 6.1 Capture 1 TAS Enabled
 ![wireshark capture TAS](assets/tsn-tas-demo-graph.png)
 
-Verified against the raw capture: steady-state cycles show high_pri occupying a 40 ms window, immediately followed by med_pri for 30 ms, immediately followed by low_pri for 30 ms, then repeating, matching the configured control-list order (queue 7 → queue 3-6 → queue 0-2) and the default PCP-to-queue mapping. Each transition boundary shows ~1 ms of cross-class overlap, consistent with the guard-band edge effect and within the pass criteria above. No priority-7 merge between low and high traffic is observed, confirming the QoS trust-tag fix noted in §4.2.
+Verified against the raw capture: steady-state cycles show high_pri occupying a 40 ms window, immediately followed by med_pri for 30 ms, immediately followed by low_pri for 30 ms, then repeating, matching the configured control-list order (queue 7 → queue 3-6 → queue 0-2) and the default PCP-to-queue mapping. Each transition boundary shows ~1 ms of cross-class overlap, consistent with the guard-band edge effect and within the pass criteria above. No priority-7 merge between low and high traffic is observed, confirming the QoS trust-tag fix.
 
 ### 6.2 Capture 2 TAS Disabled (Baseline)
+
 ![wireshark capture not TAS](assets/tsn-no-tas-demo.png)
 
 With TAS disabled, all three streams are interleaved continuously with no gate isolation, as expected for the baseline, confirming that the isolation seen in Capture 1 is produced by TAS.

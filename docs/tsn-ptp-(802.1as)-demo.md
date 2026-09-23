@@ -87,14 +87,6 @@ $ sudo ptp4l \
   -m
 ```
 
-The expected state progression is broadly `INITIALIZING -> LISTENING -> UNCALIBRATED -> SLAVE`. In the periodic servo output:
-
-- `s0` means the servo is unlocked.
-- `s1` means a clock step is being performed.
-- `s2` means the servo is locked and is correcting the clock by frequency adjustment.
-
-Do not start judging offsets during `s0` or `s1`. Wait for stable `s2` output.
-
 ### 5.2 Synchronize Linux system time with `phc2sys`
 
 Once `ptp4l` is running, open another terminal and run:
@@ -109,9 +101,15 @@ $ sudo phc2sys \
   -m
 ```
 
-`ptp4l` controls the NIC PHC from the gPTP network. `phc2sys` then uses that PHC as its source (`-s`) and controls the Linux system clock (`-c CLOCK_REALTIME`). `-w` waits for `ptp4l` to publish a usable time relationship, while `--transportSpecific=1` selects the 802.1AS transport-specific value.
+The expected state progression is `INITIALIZING -> LISTENING -> UNCALIBRATED -> SLAVE`. In the periodic servo output:
 
-After foreground validation, the same processes may be launched under the system's service manager. If they are temporarily backgrounded with `&`, redirect their output to a known log file so evidence is not lost.
+- `s0` means the servo is unlocked.
+- `s1` means a clock step is being performed.
+- `s2` means the servo is locked and is correcting the clock by frequency adjustment.
+
+Wait for stable `s2` output.
+
+`ptp4l` controls the NIC PHC from the gPTP network. `phc2sys` then uses that PHC as its source (`-s`) and controls the Linux system clock (`-c CLOCK_REALTIME`). `-w` waits for `ptp4l` to publish a usable time relationship, while `--transportSpecific=1` selects the 802.1AS transport-specific value.
 
 ## 6 TSN Switch Configuration (VSC5641EV)
 
@@ -123,13 +121,13 @@ The significant settings are:
 - `delay-mechanism p2p`: peer-delay measurement, required for this gPTP setup.
 - `mcast-dest link-local`: use the link-local PTP multicast destination.
 - `virtual-port mode pps-in 2` plus `tod ser proto rmc`: discipline the switch clock from the external 1PPS and RMC ToD source.
-- `force-as-capable path-delay 0`: force the port to be treated as 802.1AS-capable. This is convenient for a controlled demo but bypasses an important qualification check; it must not be used as evidence of standards conformance.
+- `force-as-capable path-delay 1`: force the port to be treated as 802.1AS-capable. This is convenient for a controlled demo but bypasses an important qualification check; it must not be used as evidence of standards conformance.
 
 Apply the PTP portion of the following captured running configuration. Baseline management, spanning-tree, voice-VLAN, and user-account lines are not required for the gPTP function and should be preserved according to the lab's normal switch configuration rather than copied from another unit.
 
 Log-in as Admin to PCB135 using **`ICLI`**, then configure the following:
 
-!!! Recommended
+!!! tip
 
 	Clear all switch configuration back to default but keep the switch's IP address
 	```console
