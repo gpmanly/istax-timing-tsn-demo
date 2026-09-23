@@ -1,11 +1,19 @@
-/* Prevent selection of environment headers and prompts */
+/* Keep syntax-highlighted console text selectable.  Hiding the prompt spans
+   with user-select:none makes native browser selection insert line breaks
+   between adjacent syntax spans (for example, `ptp` and `0`).  Prompts are
+   removed in custom.js when the selection is copied. */
 .language-console [class*="gp"],
 .language-generic [class*="gp"] {
     font-weight: 800;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+}
+
+/* Prompts remain selectable internally so the browser does not corrupt the
+   whitespace between syntax-highlighted spans, but do not give them a
+   selection highlight.  custom.js removes them from the copied text. */
+.language-console [class*="gp"]::selection,
+.language-generic [class*="gp"]::selection {
+    background: transparent;
+    color: inherit;
 }
 
 .md-content {

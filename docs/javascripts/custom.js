@@ -25,3 +25,23 @@ document.addEventListener(
   },
   true // capture phase: runs before Material's handler
 );
+
+// Native selection must remain enabled for reliable browser copy/paste.  The
+// prompt is useful on screen but should not be included in a command pasted
+// into a terminal, so remove it from manually selected console text here.
+document.addEventListener("copy", function (event) {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed) return;
+
+  const anchor = selection.anchorNode?.parentElement;
+  const code = anchor?.closest(".language-console, .language-generic");
+  if (!code) return;
+
+  const text = selection
+    .toString()
+    .replace(/^[ \t]*(?:\([^\r\n)]*\)|\$|#)[ \t]*#?[ \t]*/gm, "")
+    .trim();
+
+  event.preventDefault();
+  event.clipboardData?.setData("text/plain", text);
+});
