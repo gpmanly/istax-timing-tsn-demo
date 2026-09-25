@@ -1,0 +1,1475 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://gpmanly.github.io/istax-timing-tsn-demo/timing-gnss-integration-demo.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/MCHP.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>GNSS Timing Integration - IStaX Timing and TSN Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/custom.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gnss-timing-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-header__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IStaX Timing and TSN Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GNSS Timing Integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-nav__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    IStaX Timing and TSN Demo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timing Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Timing Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GNSS Timing Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="timing-gnss-integration-demo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GNSS Timing Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gnss-timing-module-configuration-neo-m8t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 GNSS Timing Module Configuration (NEO-M8T)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 GNSS Timing Module Configuration (NEO-M8T)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-view-configuration-view-or-press" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 View → Configuration View or Press:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tp1-1pps-ubx-cfg-tp5-target-timepulse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 TP1 → 1PPS: UBX-CFG-TP5, target = TIMEPULSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-tp2-reference-clock-ubx-cfg-tp5-target-timepulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 TP2 → reference clock: UBX-CFG-TP5, target = TIMEPULSE2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-tod-nmea-ubx-cfg-msg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 ToD (NMEA): UBX-CFG-MSG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-save-the-configuration-ubx-cfg-cfg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Save the configuration: UBX-CFG-CFG
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-1pps-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 1PPS confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-tod-rmc-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 ToD (RMC) confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Notes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Notes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-neo-m8t-10-mhz-fails-dpll-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 NEO-M8T 10 MHz fails DPLL lock
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 NEO-M8T 10 MHz fails DPLL lock">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-cause" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root cause:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g8275.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-itu-t-g.8273.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8273.2 Telecom PTP Performance Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-boundary-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Boundary Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-transparent-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Transparent Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSN Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Precision Time Protocol (802.1AS/gPTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-traffic-generator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Traffic Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-credit-based-haper-%28cbs%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Credit-Based Shaper (CBS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-time-aware-shaping-%28tas%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Time-Aware Shaping (TAS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Per-Stream Filtering and Policing (PSFP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gnss-timing-module-configuration-neo-m8t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 GNSS Timing Module Configuration (NEO-M8T)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 GNSS Timing Module Configuration (NEO-M8T)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-view-configuration-view-or-press" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 View → Configuration View or Press:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tp1-1pps-ubx-cfg-tp5-target-timepulse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 TP1 → 1PPS: UBX-CFG-TP5, target = TIMEPULSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-tp2-reference-clock-ubx-cfg-tp5-target-timepulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 TP2 → reference clock: UBX-CFG-TP5, target = TIMEPULSE2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-tod-nmea-ubx-cfg-msg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 ToD (NMEA): UBX-CFG-MSG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-save-the-configuration-ubx-cfg-cfg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Save the configuration: UBX-CFG-CFG
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-1pps-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 1PPS confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-tod-rmc-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 ToD (RMC) confirmation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Notes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Notes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-neo-m8t-10-mhz-fails-dpll-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 NEO-M8T 10 MHz fails DPLL lock
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 NEO-M8T 10 MHz fails DPLL lock">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-cause" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root cause:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="index.html" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="timing-gnss-integration-demo.html" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Timing Demo
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gnss-timing-integration">GNSS Timing Integration</h1>
+<h2 id="1-objective">1 Objective</h2>
+<p>Deliver 1PPS and NMEA Time-of-Day (ToD) from the NEO-M8T GNSS Timing Module into the VSC5641EV so that the VSC7558 PTP engine and the on-board ZL30772 DPLL can lock to GNSS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NEO-M8T 10 MHz output fails DPLL lock. See Note <a href="#61-neo-m8t-10-mhz-fails-dpll-lock">10 MHz fails DPLL lock</a>.
+And so in this demo, NEO-M8T TP2 is configured for <strong>2.048 MHz</strong>.</p>
+</div>
+<h2 id="2-test-topology">2 Test Topology</h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-gnss-integration-block-diagram.png" data-desc-position="bottom"><img alt="GNSS Integration Block Diagram" src="assets/timing-gnss-integration-block-diagram.png"></a></p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1PPS</strong></td>
+<td>NEO-M8T TP1 → <strong>VSC5641EV PPS IN / J13 (SMA)</strong></td>
+</tr>
+<tr>
+<td><strong>Reference clock</strong></td>
+<td>NEO-M8T TP2, configured for <strong>2.048 MHz</strong> because <a href="#61-neo-m8t-10-mhz-fails-dpll-lock">10 MHz fails DPLL lock</a>, expected behavior → <strong>VSC5641EV 10M IN / J29 (SMA)</strong></td>
+</tr>
+<tr>
+<td><strong>ToD (NMEA)</strong></td>
+<td>NEO-M8T TXD → MAX485 module → RS-422 connector (RJ-45)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-gnss-timing-module-configuration-neo-m8t">3 GNSS Timing Module Configuration (NEO-M8T)</h2>
+<p>Configuration is done in <strong><a href="https://www.u-blox.com/en/product/u-center">u-center</a></strong>.</p>
+<h3 id="31-view-configuration-view-or-press">3.1 View → Configuration View or Press:</h3>
+<p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-f9">F9</kbd></span></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-1.jpg" data-desc-position="bottom"><img alt="ucenter-config-1" src="assets/timing-ucenter-conf-1.jpg"></a></p>
+<h3 id="32-tp1-1pps-ubx-cfg-tp5-target-timepulse">3.2 <strong>TP1 → 1PPS:</strong> <code>UBX-CFG-TP5</code>, target = TIMEPULSE</h3>
+<ul>
+<li>1 Hz, ~100 ms pulse width, <strong>duty cycle 10%</strong>, rising edge = on-time edge</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-2.jpg" data-desc-position="bottom"><img alt="ucenter-config-2" src="assets/timing-ucenter-conf-2.jpg"></a></p>
+<h3 id="33-tp2-reference-clock-ubx-cfg-tp5-target-timepulse2">3.3 <strong>TP2 → reference clock:</strong> <code>UBX-CFG-TP5</code>, target = TIMEPULSE2</h3>
+<ul>
+<li>Continuous frequency output, <strong>duty cycle 50%</strong></li>
+<li>Desired frequency is <strong>2.048 MHz</strong> (10 MHz electrically works but is not usable for DPLL lock)</li>
+<li><code>UBX-CFG-TP5</code> has separate <strong>freq</strong> (unlocked) and <strong>freqLocked</strong> (GNSS-locked) fields, set <strong>both</strong> to 2.048 MHz, otherwise the output frequency changes when the receiver transitions between fix states</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-3.jpg" data-desc-position="bottom"><img alt="ucenter-config-3" src="assets/timing-ucenter-conf-3.jpg"></a></p>
+<h3 id="34-tod-nmea-ubx-cfg-msg">3.4 <strong>ToD (NMEA):</strong> <code>UBX-CFG-MSG</code></h3>
+<ul>
+<li>UART default: <strong>9600 baud, 8N1</strong>: must match the switch's <code>ptp rs422 baudrate 9600 parity none wordlength 8 stopbits 1 flowctrl none</code></li>
+<li>Disable every NMEA sentence except <strong>RMC</strong> (the module sends <code>$GNZDA</code> by default, which the switch app doesn't parse and logs as a benign but noisy error)</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-4.jpg" data-desc-position="bottom"><img alt="ucenter-config-4" src="assets/timing-ucenter-conf-4.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-5.jpg" data-desc-position="bottom"><img alt="ucenter-config-5" src="assets/timing-ucenter-conf-5.jpg"></a></p>
+<h3 id="35-save-the-configuration-ubx-cfg-cfg">3.5 <strong>Save the configuration:</strong> <code>UBX-CFG-CFG</code></h3>
+<ul>
+<li>All of the above (TP5 settings, CFG-MSG sentence selection) live in RAM until saved. Use <code>UBX-CFG-CFG</code> to commit the current configuration to BBR/Flash so it survives a power cycle, otherwise every setting reverts to default on reboot.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ucenter-conf-6.jpg" data-desc-position="bottom"><img alt="ucenter-config-6" src="assets/timing-ucenter-conf-6.jpg"></a></p>
+<hr>
+<h2 id="4-tsn-switch-configuration-vsc5641ev">4 TSN Switch Configuration (VSC5641EV)</h2>
+<p>Log-in as Admin to PCB135 using <strong><code>ICLI</code></strong>, then configure the following:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Clear all switch configuration back to default but keep the switch's IP address
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp"># </span>reload<span class="w"> </span>defaults<span class="w"> </span>keep-ip<span class="w"> </span>force
+</span></code></pre></div><p></p>
+</div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mode<span class="w"> </span>boundary<span class="w"> </span>onestep<span class="w"> </span>ethernet<span class="w"> </span>twoway<span class="w"> </span>vid<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>profile<span class="w"> </span>g8275.1<span class="w"> </span>mep<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>filter-type<span class="w"> </span>aci-basic-phase-low
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>source-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gm-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dist-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>mode<span class="w"> </span>pps-in<span class="w"> </span><span class="m">2</span><span class="w"> </span>pps-delay<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>tod<span class="w"> </span>ser<span class="w"> </span>proto<span class="w"> </span>rmc
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span>rs422<span class="w"> </span>baudrate<span class="w"> </span><span class="m">9600</span><span class="w"> </span>parity<span class="w"> </span>none<span class="w"> </span>wordlength<span class="w"> </span><span class="m">8</span><span class="w"> </span>stopbits<span class="w"> </span><span class="m">1</span><span class="w"> </span>flowctrl<span class="w"> </span>none
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span><span class="nb">exit</span>
+</span></code></pre></div>
+<ul>
+<li><code>virtual-port mode pps-in 2</code>: the virtual port takes 1PPS from io-pin 2, i.e. the SMA <code>PPS IN / J13</code> path.</li>
+<li><code>virtual-port tod ser proto rmc</code>: ToD is parsed from NMEA <strong>RMC</strong> sentences only, over the RS-422 serial link.</li>
+<li><code>ptp rs422 baudrate 9600 ...</code>: matches the NEO-M8T's NMEA UART defaults (9600 8N1). <strong>The NEO-M8T's own configuration must match this</strong> (baud rate and sentence type).</li>
+</ul>
+<hr>
+<h2 id="5-results">5 Results</h2>
+<h3 id="51-1pps-confirmation">5.1 1PPS confirmation</h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp"># </span>platform<span class="w"> </span>debug<span class="w"> </span>allow
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="gp"># </span>debug<span class="w"> </span>trace<span class="w"> </span>module<span class="w"> </span>level<span class="w"> </span>ptp<span class="w"> </span>1_pps<span class="w"> </span>noise
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>D ptp/1_pps 18:48:06 103/io_pin_pps_in_slave_handler#11796: I/O pin event: source_id 11, instance_id 0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>D ptp/1_pps 18:48:06 103/io_pin_pps_in_slave_handler#11797: I/O pin: 2, pin mode 0
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>I ptp/1_pps 18:48:06 103/io_pin_pps_in_slave_handler#11804: inst: 0, devicetype 1, protocol 0
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>D ptp/1_pps 18:48:06 103/io_pin_pps_in_slave_handler#11805: io_pin 2, time     0 s_msb 1785912286 s   602983689 ns 12800 ps
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>D ptp/1_pps 18:48:06 103/ptp_external_input_slave_function#1814: DUMP: enable_t1[1 ]new_t1 [0], new_t2[1]
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>D ptp/1_pps 18:48:06 103/ptp_external_input_slave_function#1830: t2     0 s_msb 1785912286 s   602983689 ns 12800 ps
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>D ptp/1_pps 18:48:06 103/ptp_external_input_slave_function#1842: set new_t1 to false
+</span></code></pre></div>
+<p><code>io_pin_pps_in_slave_handler</code> is capturing real timestamps on io-pin 2 with no error, and <code>ptp_external_input_slave_function</code> is consuming them. <strong>TP1 --&gt; J13 wiring and switch-app config confirmed good, end-to-end.</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To stop the messages:
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp"># </span>debug<span class="w"> </span>trace<span class="w"> </span>module<span class="w"> </span>level<span class="w"> </span>ptp<span class="w"> </span>1_pps<span class="w"> </span>error
+</span></code></pre></div><p></p>
+</div>
+<h3 id="52-tod-rmc-confirmation">5.2 ToD (RMC) confirmation</h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp"># </span>debug<span class="w"> </span>trace<span class="w"> </span>module<span class="w"> </span>level<span class="w"> </span>ptp<span class="w"> </span>serial_1pps<span class="w"> </span>noise
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>N ptp/serial_1pps 18:50:50 82/ptp_1pps_serial_thread#316: Received: $GNRMC,064731.00,A,1425.22003,N,12102.34818,E,0.218,120.86,050826,,,A*7F
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>D ptp/serial_1pps 18:50:50 82/ptp_1pps_convert_message_2_time#168: rmc message utc offset 0
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>D ptp/serial_1pps 18:50:50 82/ptp_1pps_convert_message_2_time#214: Successfully parsed serial message $GNRMC,064731.00,A,1425.22003,N,12102.34818,E,0.218,120.86,050826,,,A*7F
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>I ptp/serial_1pps 18:50:50 82/ptp_1pps_serial_thread#324: time received     0 s_msb 1785912451 s           0 ns     0 ps
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>N ptp/serial_1pps 18:50:50 82/ptp_1pps_serial_thread#316: Received: $GNZDA,064731.00,05,08,2026,00,00*74
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>N ptp/serial_1pps 18:50:50 82/ptp_1pps_convert_message_2_time#170: Error encountered while parsing message from GPS. Was probably not an NMEA RMC message.
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To stop the messages:
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="gp"># </span>debug<span class="w"> </span>trace<span class="w"> </span>module<span class="w"> </span>level<span class="w"> </span>ptp<span class="w"> </span>serial_1pps<span class="w"> </span>error
+</span></code></pre></div><p></p>
+</div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="gp"># </span>show<span class="w"> </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>local-clock
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>PTP Time (0)    : 2026-08-05T06:51:11+00:00 986,975,190
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Clock Adjustment method: Synce DPLL
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a># show ptp 0 port-state
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>VirtualPort  Enabled  PTP-State  Io-pin
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>-----------  -------  ---------  ------
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>         58  TRUE     slve            2
+</span></code></pre></div>
+<p><code>ptp_1pps_serial_thread</code>/<code>ptp_1pps_convert_message_2_time</code> successfully parse the NEO-M8T's <code>$GNRMC</code> sentences, <code>show ptp 0 local-clock</code> reports the correct current UTC, and virtual port 58's <code>PTP-State</code> is <code>slve</code>, <strong>locked to the ToD 1PPS</strong>. The <code>$GNZDA</code> line each cycle throws a parse error, expected since the switch app is configured for <code>proto rmc</code> only and doesn't try to parse ZDA; it's benign but noisy.</p>
+<h2 id="6-notes">6 Notes:</h2>
+<h3 id="61-neo-m8t-10-mhz-fails-dpll-lock">6.1 NEO-M8T 10 MHz fails DPLL lock</h3>
+<p>With TP2 configured to output 10MHz clock and wired into <code>10M IN / J29</code>, the ZL30772 fails to lock:</p>
+<p></p><div class="language-console highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="gp"># </span>platform<span class="w"> </span>debug<span class="w"> </span>allow
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="gp"># </span>debug<span class="w"> </span>zl3077x<span class="w"> </span>ref<span class="w"> </span>status<span class="w"> </span><span class="m">2</span>
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Ref REF1P(2)+REF0P(0): 10 MHz         [FAIL] -- Flags: LOS:0 SCM:1 CFM:1 GST:1 PFM:1 -- Priority: 0
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Ref REF0P(0)         : 125 MHz        [FAIL] -- Flags: LOS:0 SCM:1 CFM:1 GST:1 PFM:1 -- Priority: 0
+</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gp"># </span>debug<span class="w"> </span>zl3077x<span class="w"> </span>dpll<span class="w"> </span>status<span class="w"> </span><span class="m">2</span>
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>DPLL[2]
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>        lock                 :: 0x0
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>        holdover             :: 0x0
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        pull_in_hit          :: 0x0
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>        psl_hit              :: 0x0
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        status               :: 0x0
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>        ref_in               :: 0xa
+</span></code></pre></div><p></p>
+<p><code>LOS:0</code> means the pin sees edges, the physical connection is good and something is toggling. But <code>SCM</code>/<code>CFM</code>/<code>GST</code>/<code>PFM</code> (Single-Cycle, Coarse-Frequency, Guard-Soft-Transient, Precise-Frequency monitors, the ZL30772's ~±10% frequency-qualification window around the expected 10 MHz) <strong>all fail</strong>, so the reference is disqualified before it can ever become a lock candidate. <code>dpll status 2</code> confirms this: <code>ref_in:0xa</code> is the "no reference selected" sentinel (valid refs are 0-9), and <code>lock</code>/<code>holdover</code> are both <code>0x0</code> DPLL2 (the SyncE/frequency DPLL) is sitting in free-run with nothing valid to lock to.</p>
+<h4 id="root-cause">Root cause:</h4>
+<p>The 10 MHz timing output (TP2) from the NEO-M8T free-runs off the module's local oscillator, which isn't accurate enough to pass SCM/CFM/PFM. So the ZL30772 is correctly rejecting it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html" class="md-footer__link md-footer__link--next" aria-label="Next: G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.footer", "navigation.sections", "navigation.path", "navigation.expand"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/custom.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

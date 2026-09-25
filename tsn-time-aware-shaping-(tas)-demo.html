@@ -1,0 +1,1792 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://gpmanly.github.io/istax-timing-tsn-demo/tsn-time-aware-shaping-%28tas%29-demo.html">
+      
+      
+        <link rel="prev" href="tsn-credit-based-haper-%28cbs%29-demo.html">
+      
+      
+        <link rel="next" href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/MCHP.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>TSN Time-Aware Shaping (TAS) - IStaX Timing and TSN Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/custom.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tsn-time-aware-shaping-tas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-header__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IStaX Timing and TSN Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TSN Time-Aware Shaping (TAS)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-nav__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    IStaX Timing and TSN Demo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timing Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Timing Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-gnss-integration-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GNSS Timing Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g8275.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-itu-t-g.8273.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8273.2 Telecom PTP Performance Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-boundary-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Boundary Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-transparent-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Transparent Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSN Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Precision Time Protocol (802.1AS/gPTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-traffic-generator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Traffic Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-credit-based-haper-%28cbs%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Credit-Based Shaper (CBS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Time-Aware Shaping (TAS)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="tsn-time-aware-shaping-%28tas%29-demo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Time-Aware Shaping (TAS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-traffic-generator-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Traffic Generator Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 Traffic Generator Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ep1-low-and-medium-priority-talkers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 EP1 Low and Medium Priority Talkers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ep2-high-priority-talker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 EP2 High Priority Talker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-synchronized-start-and-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Synchronized Start and Stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-how-the-talker-configuration-fits-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 How the Talker Configuration Fits the Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 TSN Switch Configuration (VSC5641EV)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-ptp-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 PTP Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-qos-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 QoS Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-time-aware-shaper-tas-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Time Aware Shaper (TAS) Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Time Aware Shaper (TAS) Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-configuration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Configuration Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-expected-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Expected Behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-capture-1-tas-enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Capture 1 TAS Enabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-capture-2-tas-disabled-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Capture 2 TAS Disabled (Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Per-Stream Filtering and Policing (PSFP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-traffic-generator-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Traffic Generator Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 Traffic Generator Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ep1-low-and-medium-priority-talkers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 EP1 Low and Medium Priority Talkers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ep2-high-priority-talker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 EP2 High Priority Talker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-synchronized-start-and-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Synchronized Start and Stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-how-the-talker-configuration-fits-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 How the Talker Configuration Fits the Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 TSN Switch Configuration (VSC5641EV)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-ptp-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 PTP Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-qos-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 QoS Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-time-aware-shaper-tas-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Time Aware Shaper (TAS) Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Time Aware Shaper (TAS) Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-configuration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Configuration Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-expected-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Expected Behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-capture-1-tas-enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Capture 1 TAS Enabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-capture-2-tas-disabled-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Capture 2 TAS Disabled (Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="index.html" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    TSN Demo
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tsn-time-aware-shaping-tas">TSN Time-Aware Shaping (TAS)</h1>
+<h2 id="1-objective">1 Objective</h2>
+<p>Verify that IEEE 802.1Qbv Time-Aware Shaping (TAS) on the TSN switch correctly isolates high-priority, medium-priority, and low-priority traffic into separate, non-overlapping gate windows, and that no priority class leaks into another class's window.</p>
+<h2 id="2-test-topology">2 Test Topology</h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-tas-demo-block-diagram-tsn-tas-demo.png" data-desc-position="bottom"><img alt="Block Diagram" src="assets/tsn-tas-demo-block-diagram-tsn-tas-demo.png"></a></p>
+<ul>
+<li><strong>End Point 2 RPi + LAN9662 (EP2)</strong><ul>
+<li>Port 1: transmits high-priority stream (PCP 7)</li>
+<li>Port 2: receives merged/shaped traffic; Wireshark capture point (diagram legend: purple "TAS Traffic Results" edge)</li>
+</ul>
+</li>
+<li><strong>End Point 1 RPi + LAN9662 (EP1)</strong><ul>
+<li>Port 1: transmits low-priority stream (PCP 0)</li>
+<li>Port 2: transmits medium-priority stream (PCP 5)</li>
+</ul>
+</li>
+<li><strong>TSN Switch (VSC5641EV)</strong><ul>
+<li>All three talker streams (low, medium, high) ingress on three separate switch ports (Gi1/1–Gi1/3) and egress toward EP2 Port 2 through a single shaped port</li>
+<li>Egress port (Gi1/4) configured with TAS (802.1Qbv); this is the only port with <code>tsn tas gate-enabled</code></li>
+<li>NOTE: the exact Gi1/1–Gi1/3 to low/medium/high stream assignment is not recorded in this document; only the shared egress port (Gi1/4) is functionally relevant to the gate schedule under test</li>
+</ul>
+</li>
+<li><strong>PTP</strong>: all devices synchronized using the procedure and pass criteria in <a href="tsn-ptp-%28802.1as%29-demo.html">TSN Precision Time Protocol (802.1AS/gPTP)</a> (gPTP / IEEE 802.1AS, sync interval 2^-3 = 125 ms per <code>ptp 0 sync-interval -3</code>; see the switch configuration below for exact intervals)</li>
+<li><strong>Capture point</strong>: Wireshark on EP2 Port 2, downstream of the TAS-shaped egress port</li>
+</ul>
+<h2 id="3-traffic-generator-configuration">3 Traffic Generator Configuration</h2>
+<p>Use the <code>tsn-traffic-gen</code> application described in <a href="tsn-traffic-generator.html">Generating a Traffic Stream</a> to load and run the following configurations. Start the generator on both end points only after the ports, templates, and streams have been reviewed in the TUI.</p>
+<p>The UDP destination port is used as the Wireshark filter to distinguish each captured priority class: <code>10001</code> for high, <code>20001</code> for low, and <code>30001</code> for medium. The corresponding UDP source ports are <code>10000</code>, <code>20000</code>, and <code>30000</code>.</p>
+<p>All three streams are sent to the same destination MAC address, which is the MAC address of the end point (EP2 Port 2) where the TAS result is captured and analyzed.</p>
+<h3 id="31-ep1-low-and-medium-priority-talkers">3.1 EP1 Low and Medium Priority Talkers</h3>
+<p>Save the following configuration as <code>tsn-demo-config.ini</code> on EP1:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[global]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">latency_max_ns</span><span class="o">=</span><span class="s">200000</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">measure_ooo</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">stats_samples</span><span class="o">=</span><span class="s">100</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">test_id</span><span class="o">=</span><span class="s">42</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">sync_port</span><span class="o">=</span><span class="s">45900</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">sync_lead_ms</span><span class="o">=</span><span class="s">150</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">[port]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">name</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth1</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">[port]</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">name</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth2</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">[template]</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="na">name</span><span class="o">=</span><span class="s">lo_pri</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">20000</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">20001</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="k">[template]</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="na">name</span><span class="o">=</span><span class="s">mid_pri</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="na">port</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">5</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">30000</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">30001</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">[stream]</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_lo</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="na">id</span><span class="o">=</span><span class="s">2</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">lo_pri</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="k">[stream]</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_mid</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="na">id</span><span class="o">=</span><span class="s">3</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="na">port</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">mid_pri</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span></code></pre></div>
+<p>Load it from the <code>tsn-traffic-gen</code> repository root:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>./tsn-traffic-gen<span class="w"> </span>-c<span class="w"> </span>tsn-demo-config.ini
+</span></code></pre></div>
+<h3 id="32-ep2-high-priority-talker">3.2 EP2 High Priority Talker</h3>
+<p>Save the following configuration as <code>tas-demo-config.ini</code> on EP2:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[global]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">latency_max_ns</span><span class="o">=</span><span class="s">200000</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">measure_ooo</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">stats_samples</span><span class="o">=</span><span class="s">100</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">test_id</span><span class="o">=</span><span class="s">42</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">sync_port</span><span class="o">=</span><span class="s">45900</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">sync_lead_ms</span><span class="o">=</span><span class="s">150</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">[port]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="na">name</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth1</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">[port]</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="na">name</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth2</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">[template]</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="na">name</span><span class="o">=</span><span class="s">hi_pri</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">7</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">10000</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">10001</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="k">[stream]</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_hi</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="na">id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">hi_pri</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span></code></pre></div>
+<p>Load it from the <code>tsn-traffic-gen</code> repository root:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>./tsn-traffic-gen<span class="w"> </span>-c<span class="w"> </span>tas-demo-config.ini
+</span></code></pre></div>
+<h3 id="33-synchronized-start-and-stop">3.3 Synchronized Start and Stop</h3>
+<p>Both generator instances use the same <code>test_id</code>, <code>sync_port</code>, and <code>sync_lead_ms</code>, allowing EP1 to control a synchronized test:</p>
+<ol>
+<li>Synchronize the system clocks on EP1 and EP2 as described in <a href="tsn-ptp-%28802.1as%29-demo.html">TSN Precision Time Protocol (802.1AS/gPTP)</a>, and confirm that UDP broadcast traffic on port <code>45900</code> can pass between them.</li>
+<li>Load both configurations and leave both TUIs running.</li>
+<li>Start the Wireshark capture on EP2 Port 2.</li>
+<li>On EP1, press uppercase <code>S</code> or select <strong>Sync</strong> to enable the Sync latch.</li>
+<li>On EP1, press lowercase <code>s</code> or select <strong>Start</strong>. EP1 broadcasts the command through its first configured port (<code>eth1</code>), and both instances schedule transmission for the same target time, 150 ms later.</li>
+<li>When the capture interval is complete, leave the Sync latch enabled and press <code>s</code> or select <strong>Stop</strong> on EP1 to schedule a synchronized stop on both instances.</li>
+</ol>
+<h3 id="34-how-the-talker-configuration-fits-the-test">3.4 How the Talker Configuration Fits the Test</h3>
+<p>EP1 is a single traffic generator running two streams at once: <code>stream_lo</code> out its <code>tx</code> port (<code>eth1</code>, VLAN PCP 0, UDP destination port 20001) and <code>stream_mid</code> out its <code>tx0</code> port (<code>eth2</code>, VLAN PCP 5, UDP destination port 30001). EP2 is a second traffic generator running one stream, <code>stream_hi</code>, out its <code>tx</code> port (<code>eth1</code>, VLAN PCP 7, UDP destination port 10001). All three streams are generated at 900 Mbps with 1000-byte packets, so each is individually capable of saturating a gigabit link. This makes the TAS gating visible: without a schedule, three simultaneous 900 Mbps streams would contend for the same 1 Gbps egress port.</p>
+<p>Each of the three talker ports (EP1's two ports, EP2's one port) connects to a separate switch ingress port, Gi1/1–Gi1/3. With <code>qos trust tag</code> configured on those ports (§4.2), the switch classifies each stream directly from its VLAN PCP into the matching queue PCP 0 → queue 0 (low), PCP 5 → queue 5 (mid), PCP 7 → queue 7 (high) with no dependency on the UDP ports used in the streams themselves. All three queues converge on the shared egress port, Gi1/4, which is the only port with <code>tsn tas gate-enabled</code> and the 40 ms/30 ms/30 ms gate schedule (§4.3). That convergence point is also where both Wireshark captures (<code>wireshark-eth2.csv</code>, <code>wireshark-eth2-no-tas.csv</code>) are taken, and where the UDP destination port is used purely as a post-capture filter to sort packets back into their priority class.</p>
+<h2 id="4-tsn-switch-configuration-vsc5641ev">4 TSN Switch Configuration (VSC5641EV)</h2>
+<h3 id="41-ptp-requirement">4.1 PTP Requirement</h3>
+<p>Complete <a href="tsn-ptp-%28802.1as%29-demo.html">TSN Precision Time Protocol (802.1AS/gPTP)</a> before enabling or evaluating the TAS schedule. At minimum, the switch must be locked to its GNSS-backed time source and the end point connected to the egress/capture port must be synchronized to the switch. Synchronizing both generator hosts is also required when using the traffic generator's coordinated start function.</p>
+<p>A repeating gate-control list can appear to operate while the switch is free-running, but that only demonstrates local cycling. It does not prove that the gate phase is aligned to other time-aware devices. Record the switch PTP state and stable endpoint <code>s2</code> state with the TAS evidence.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Clear all switch configuration back to default but keep the switch's IP address
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp"># </span>reload<span class="w"> </span>defaults<span class="w"> </span>keep-ip<span class="w"> </span>force
+</span></code></pre></div>
+<strong>Apply the <a href="tsn-ptp-%28802.1as%29-demo.html#6-tsn-switch-configuration-vsc5641ev">802.1AS/gPTP Configuration</a></strong><p></p>
+</div>
+<h3 id="42-qos-requirement">4.2 QoS Requirement</h3>
+<p>Apply Tag Classification</p>
+<p>In the web, navigate to QoS → Port Classification and configure the following:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-qos-conf-1.jpg" data-desc-position="bottom"><img alt="Configuration 1" src="assets/tsn-qos-conf-1.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-qos-conf-2.jpg" data-desc-position="bottom"><img alt="Configuration 2" src="assets/tsn-qos-conf-2.jpg"></a></p>
+<p>Applied identically to all three talker-facing ingress ports, this uses the default PCP-to-queue mapping (PCP <em>n</em> → queue <em>n</em>) so that each stream is classified into the queue matching its tagged PCP (low → queue 0, medium → queue 5, high → queue 7).</p>
+<p>In <strong><code>ICLI</code></strong>, the configuration is as follows:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/1
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="gp">#</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="gp">#</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/3
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="gp">#</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span><span class="nb">exit</span>
+</span></code></pre></div>
+<p><strong>Why this is mandatory for TAS</strong>: <code>qos trust tag</code> sets the port's <code>trust_tag</code> field (<code>vtss_appl/include/vtss/appl/qos.h</code>), which is <code>FALSE</code> by default (<code>qos.cxx</code>). It flows into the MESA <code>tag.class_enable</code> bit and ultimately the chip's <code>PCP_DEI_QOS_ENA</code> register bit (<code>vtss_fa_qos.c</code>). When that bit is off, the ingress classifier ignores the frame's PCP entirely and puts <em>every</em> frame on the port into a single default queue (<code>default_cos</code>, itself 0 by default) regardless of PCP. TAS gate-control-list entries key strictly on queue number (<code>tsn tas control-list index N gate-state queue &lt;0-7&gt;</code>) with no PCP awareness of their own, so without trust-tag all three streams would collapse into queue 0 and share one gate window, destroying the isolation under test.</p>
+<h3 id="43-time-aware-shaper-tas-configuration">4.3 Time Aware Shaper (TAS) Configuration</h3>
+<h4 id="431-configuration-steps">4.3.1 Configuration Steps</h4>
+<p>To create and start a Time Aware Shaper schedule on port 4 where the schedule contains three gate control entries:
+- 0: Open queue 7 and close all other queues for 40 milliseconds
+- 1: Open queue 3-6 and close all other queues for 30 milliseconds
+- 2: Open queue 0-2 and close all other queues for 30 milliseconds
+The schedule is repeated every 100 milliseconds.</p>
+<p>In the web, navigate to TSN → TAS → Ports and configure the following:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-tas-demo-conf-1.jpg" data-desc-position="bottom"><img alt="Configuration-1" src="assets/tsn-tas-demo-conf-1.jpg"></a></p>
+<p>When the port configuration is saved, click on "configure" in the GCL column and configure the gate control list as follows:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-tas-demo-conf-2.jpg" data-desc-position="bottom"><img alt="Configuration 2" src="assets/tsn-tas-demo-conf-2.jpg"></a></p>
+<p>Finally, when port 1 is configured, activate the configuration using the "Config Change" checkbox:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-tas-demo-conf-3.jpg" data-desc-position="bottom"><img alt="Configuration 3" src="assets/tsn-tas-demo-conf-3.jpg"></a></p>
+<p>In <strong><code>ICLI</code></strong>, the commands below configure gPTP (802.1AS) on all four ports, trust the ingress tag on the three talker-facing ports (Gi1/1–Gi1/3), and program the 40 ms / 30 ms / 30 ms TAS gate schedule on the shared egress port (Gi1/4).</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>Disable<span class="w"> </span>always-guard-band<span class="w"> </span>globally<span class="w"> </span><span class="o">(</span>guard<span class="w"> </span>band<span class="w"> </span>only<span class="w"> </span>applied<span class="w"> </span>to<span class="w"> </span>preemptible<span class="w"> </span>queues<span class="o">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>no<span class="w"> </span>tsn<span class="w"> </span>tas<span class="w"> </span>always-guard-band
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="go">! Configure PTP instance 0 as an 802.1AS (gPTP) boundary clock</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mode<span class="w"> </span>boundary<span class="w"> </span>twostep<span class="w"> </span>ethernet<span class="w"> </span>twoway<span class="w"> </span>vid<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>profile<span class="w"> </span><span class="m">802</span>.1as<span class="w"> </span>mep<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>filter-type<span class="w"> </span>basic
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>source-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gm-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dist-time-inaccuracy<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="go">! Configure the GNSS-fed virtual port (1PPS + RMC ToD reference)</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>mode<span class="w"> </span>pps-in<span class="w"> </span><span class="m">2</span><span class="w"> </span>pps-delay<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>tod<span class="w"> </span>ser<span class="w"> </span>proto<span class="w"> </span>rmc
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span>rs422<span class="w"> </span>baudrate<span class="w"> </span><span class="m">9600</span><span class="w"> </span>parity<span class="w"> </span>none<span class="w"> </span>wordlength<span class="w"> </span><span class="m">8</span><span class="w"> </span>stopbits<span class="w"> </span><span class="m">1</span><span class="w"> </span>flowctrl<span class="w"> </span>none
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="go">! --- Gi1/1: low-priority talker-facing ingress port ---</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/1
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span>-3
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-asymmetry<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>ingress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>egress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mcast-dest<span class="w"> </span>link-local
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogSyncInterval<span class="w"> </span>-3
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogSyncInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>useMgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gptp-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>force-as-capable<span class="w"> </span>path-delay<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="go">! --- Gi1/2: medium-priority talker-facing ingress port ---</span>
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>switchport<span class="w"> </span>hybrid<span class="w"> </span>egress-tag<span class="w"> </span>all
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span>-3
+</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-asymmetry<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>ingress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-53"><a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>egress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-54"><a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mcast-dest<span class="w"> </span>link-local
+</span><span id="__span-7-55"><a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogSyncInterval<span class="w"> </span>-3
+</span><span id="__span-7-56"><a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-57"><a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-58"><a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-59"><a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogSyncInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-60"><a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-61"><a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-62"><a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>useMgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-63"><a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gptp-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-64"><a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>force-as-capable<span class="w"> </span>path-delay<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-65"><a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-7-66"><a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a>
+</span><span id="__span-7-67"><a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a><span class="go">! --- Gi1/3: high-priority talker-facing ingress port ---</span>
+</span><span id="__span-7-68"><a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/3
+</span><span id="__span-7-69"><a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>switchport<span class="w"> </span>hybrid<span class="w"> </span>egress-tag<span class="w"> </span>all
+</span><span id="__span-7-70"><a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-7-71"><a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-7-72"><a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-73"><a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-7-74"><a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span>-3
+</span><span id="__span-7-75"><a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-7-76"><a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-77"><a id="__codelineno-7-77" name="__codelineno-7-77" href="#__codelineno-7-77"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-asymmetry<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-78"><a id="__codelineno-7-78" name="__codelineno-7-78" href="#__codelineno-7-78"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>ingress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-79"><a id="__codelineno-7-79" name="__codelineno-7-79" href="#__codelineno-7-79"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>egress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-80"><a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mcast-dest<span class="w"> </span>link-local
+</span><span id="__span-7-81"><a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogSyncInterval<span class="w"> </span>-3
+</span><span id="__span-7-82"><a id="__codelineno-7-82" name="__codelineno-7-82" href="#__codelineno-7-82"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-83"><a id="__codelineno-7-83" name="__codelineno-7-83" href="#__codelineno-7-83"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-84"><a id="__codelineno-7-84" name="__codelineno-7-84" href="#__codelineno-7-84"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-85"><a id="__codelineno-7-85" name="__codelineno-7-85" href="#__codelineno-7-85"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogSyncInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-86"><a id="__codelineno-7-86" name="__codelineno-7-86" href="#__codelineno-7-86"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-87"><a id="__codelineno-7-87" name="__codelineno-7-87" href="#__codelineno-7-87"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-88"><a id="__codelineno-7-88" name="__codelineno-7-88" href="#__codelineno-7-88"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>useMgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-89"><a id="__codelineno-7-89" name="__codelineno-7-89" href="#__codelineno-7-89"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gptp-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-90"><a id="__codelineno-7-90" name="__codelineno-7-90" href="#__codelineno-7-90"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>force-as-capable<span class="w"> </span>path-delay<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-91"><a id="__codelineno-7-91" name="__codelineno-7-91" href="#__codelineno-7-91"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-7-92"><a id="__codelineno-7-92" name="__codelineno-7-92" href="#__codelineno-7-92"></a>
+</span><span id="__span-7-93"><a id="__codelineno-7-93" name="__codelineno-7-93" href="#__codelineno-7-93"></a><span class="go">! --- Gi1/4: shaped egress port. This is where TAS is actually applied ---</span>
+</span><span id="__span-7-94"><a id="__codelineno-7-94" name="__codelineno-7-94" href="#__codelineno-7-94"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-7-95"><a id="__codelineno-7-95" name="__codelineno-7-95" href="#__codelineno-7-95"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>switchport<span class="w"> </span>hybrid<span class="w"> </span>egress-tag<span class="w"> </span>all
+</span><span id="__span-7-96"><a id="__codelineno-7-96" name="__codelineno-7-96" href="#__codelineno-7-96"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-7-97"><a id="__codelineno-7-97" name="__codelineno-7-97" href="#__codelineno-7-97"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>no<span class="w"> </span>spanning-tree
+</span><span id="__span-7-98"><a id="__codelineno-7-98" name="__codelineno-7-98" href="#__codelineno-7-98"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-7-99"><a id="__codelineno-7-99" name="__codelineno-7-99" href="#__codelineno-7-99"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-100"><a id="__codelineno-7-100" name="__codelineno-7-100" href="#__codelineno-7-100"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-7-101"><a id="__codelineno-7-101" name="__codelineno-7-101" href="#__codelineno-7-101"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span>-3
+</span><span id="__span-7-102"><a id="__codelineno-7-102" name="__codelineno-7-102" href="#__codelineno-7-102"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-7-103"><a id="__codelineno-7-103" name="__codelineno-7-103" href="#__codelineno-7-103"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-104"><a id="__codelineno-7-104" name="__codelineno-7-104" href="#__codelineno-7-104"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-asymmetry<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-105"><a id="__codelineno-7-105" name="__codelineno-7-105" href="#__codelineno-7-105"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>ingress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-106"><a id="__codelineno-7-106" name="__codelineno-7-106" href="#__codelineno-7-106"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>egress-latency<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-107"><a id="__codelineno-7-107" name="__codelineno-7-107" href="#__codelineno-7-107"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mcast-dest<span class="w"> </span>link-local
+</span><span id="__span-7-108"><a id="__codelineno-7-108" name="__codelineno-7-108" href="#__codelineno-7-108"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogSyncInterval<span class="w"> </span>-3
+</span><span id="__span-7-109"><a id="__codelineno-7-109" name="__codelineno-7-109" href="#__codelineno-7-109"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-110"><a id="__codelineno-7-110" name="__codelineno-7-110" href="#__codelineno-7-110"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-111"><a id="__codelineno-7-111" name="__codelineno-7-111" href="#__codelineno-7-111"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-112"><a id="__codelineno-7-112" name="__codelineno-7-112" href="#__codelineno-7-112"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogSyncInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-113"><a id="__codelineno-7-113" name="__codelineno-7-113" href="#__codelineno-7-113"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogAnnounceInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-114"><a id="__codelineno-7-114" name="__codelineno-7-114" href="#__codelineno-7-114"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>usemgtSettableLogPdelayReqInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-115"><a id="__codelineno-7-115" name="__codelineno-7-115" href="#__codelineno-7-115"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>useMgtSettableLogGptpCapableMessageInterval<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-116"><a id="__codelineno-7-116" name="__codelineno-7-116" href="#__codelineno-7-116"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>gptp-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-7-117"><a id="__codelineno-7-117" name="__codelineno-7-117" href="#__codelineno-7-117"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>force-as-capable<span class="w"> </span>path-delay<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-118"><a id="__codelineno-7-118" name="__codelineno-7-118" href="#__codelineno-7-118"></a>
+</span><span id="__span-7-119"><a id="__codelineno-7-119" name="__codelineno-7-119" href="#__codelineno-7-119"></a><span class="go">! Guard-band sizing for the express (queue 7) and best-effort (queue 0) traffic classes</span>
+</span><span id="__span-7-120"><a id="__codelineno-7-120" name="__codelineno-7-120" href="#__codelineno-7-120"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>max-sdu<span class="w"> </span>queue<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1000</span>
+</span><span id="__span-7-121"><a id="__codelineno-7-121" name="__codelineno-7-121" href="#__codelineno-7-121"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>max-sdu<span class="w"> </span>queue<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">1000</span>
+</span><span id="__span-7-122"><a id="__codelineno-7-122" name="__codelineno-7-122" href="#__codelineno-7-122"></a>
+</span><span id="__span-7-123"><a id="__codelineno-7-123" name="__codelineno-7-123" href="#__codelineno-7-123"></a><span class="go">! Gate control list: high(40ms) -&gt; medium(30ms) -&gt; low(30ms), 100ms cycle</span>
+</span><span id="__span-7-124"><a id="__codelineno-7-124" name="__codelineno-7-124" href="#__codelineno-7-124"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>control-list-length<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-7-125"><a id="__codelineno-7-125" name="__codelineno-7-125" href="#__codelineno-7-125"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>control-list<span class="w"> </span>index<span class="w"> </span><span class="m">0</span><span class="w"> </span>gate-state<span class="w"> </span>queue<span class="w"> </span><span class="m">7</span><span class="w"> </span>open<span class="w"> </span>time-interval<span class="w"> </span><span class="m">40000000</span>
+</span><span id="__span-7-126"><a id="__codelineno-7-126" name="__codelineno-7-126" href="#__codelineno-7-126"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>control-list<span class="w"> </span>index<span class="w"> </span><span class="m">1</span><span class="w"> </span>gate-state<span class="w"> </span>queue<span class="w"> </span><span class="m">3</span>-6<span class="w"> </span>open<span class="w"> </span>time-interval<span class="w"> </span><span class="m">30000000</span>
+</span><span id="__span-7-127"><a id="__codelineno-7-127" name="__codelineno-7-127" href="#__codelineno-7-127"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>control-list<span class="w"> </span>index<span class="w"> </span><span class="m">2</span><span class="w"> </span>gate-state<span class="w"> </span>queue<span class="w"> </span><span class="m">0</span>-2<span class="w"> </span>open<span class="w"> </span>time-interval<span class="w"> </span><span class="m">30000000</span>
+</span><span id="__span-7-128"><a id="__codelineno-7-128" name="__codelineno-7-128" href="#__codelineno-7-128"></a>
+</span><span id="__span-7-129"><a id="__codelineno-7-129" name="__codelineno-7-129" href="#__codelineno-7-129"></a><span class="go">! Enable the shaper and commit the schedule</span>
+</span><span id="__span-7-130"><a id="__codelineno-7-130" name="__codelineno-7-130" href="#__codelineno-7-130"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>gate-enabled
+</span><span id="__span-7-131"><a id="__codelineno-7-131" name="__codelineno-7-131" href="#__codelineno-7-131"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>tsn<span class="w"> </span>tas<span class="w"> </span>config-change
+</span><span id="__span-7-132"><a id="__codelineno-7-132" name="__codelineno-7-132" href="#__codelineno-7-132"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-7-133"><a id="__codelineno-7-133" name="__codelineno-7-133" href="#__codelineno-7-133"></a>
+</span><span id="__span-7-134"><a id="__codelineno-7-134" name="__codelineno-7-134" href="#__codelineno-7-134"></a><span class="go">! Management VLAN interface</span>
+</span><span id="__span-7-135"><a id="__codelineno-7-135" name="__codelineno-7-135" href="#__codelineno-7-135"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>vlan<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-7-136"><a id="__codelineno-7-136" name="__codelineno-7-136" href="#__codelineno-7-136"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.137.158<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-7-137"><a id="__codelineno-7-137" name="__codelineno-7-137" href="#__codelineno-7-137"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-7-138"><a id="__codelineno-7-138" name="__codelineno-7-138" href="#__codelineno-7-138"></a>
+</span><span id="__span-7-139"><a id="__codelineno-7-139" name="__codelineno-7-139" href="#__codelineno-7-139"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>end
+</span><span id="__span-7-140"><a id="__codelineno-7-140" name="__codelineno-7-140" href="#__codelineno-7-140"></a><span class="gp">#</span>
+</span></code></pre></div>
+<h4 id="432-verification">4.3.2 Verification</h4>
+<p>Confirm the running configuration matches the intended schedule with <code>show running-config</code>:</p>
+<p></p><div class="language-console highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="gp"># </span>show<span class="w"> </span>running-config
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Building configuration...
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>...
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>no tsn tas always-guard-band
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>!
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>ptp 0 mode boundary twostep ethernet twoway vid 1 0 profile 802.1as mep 1
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a> ptp 0 filter-type basic
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a> ptp 0 source-time-inaccuracy 0
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a> ptp 0 gm-time-inaccuracy 0
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a> ptp 0 dist-time-inaccuracy 0
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>ptp 0 virtual-port mode pps-in 2 pps-delay 5
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>ptp 0 virtual-port tod ser proto rmc
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>ptp rs422 baudrate 9600 parity none wordlength 8 stopbits 1 flowctrl none
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>!
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>interface GigabitEthernet 1/1
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a> qos trust tag
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a> network-clock synchronization ssm
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a> ptp 0
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a> ...
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>!
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>interface GigabitEthernet 1/2
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a> switchport hybrid egress-tag all
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a> qos trust tag
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a> network-clock synchronization ssm
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a> ptp 0
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a> ...
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>!
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>interface GigabitEthernet 1/3
+</span><span id="__span-9-28"><a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a> switchport hybrid egress-tag all
+</span><span id="__span-9-29"><a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a> qos trust tag
+</span><span id="__span-9-30"><a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a> network-clock synchronization ssm
+</span><span id="__span-9-31"><a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a> ptp 0
+</span><span id="__span-9-32"><a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a> ...
+</span><span id="__span-9-33"><a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>!
+</span><span id="__span-9-34"><a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>interface GigabitEthernet 1/4
+</span><span id="__span-9-35"><a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a> switchport hybrid egress-tag all
+</span><span id="__span-9-36"><a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a> qos trust tag
+</span><span id="__span-9-37"><a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a> no spanning-tree
+</span><span id="__span-9-38"><a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a> network-clock synchronization ssm
+</span><span id="__span-9-39"><a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a> ptp 0
+</span><span id="__span-9-40"><a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a> ...
+</span><span id="__span-9-41"><a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a> tsn tas max-sdu queue 0 1000
+</span><span id="__span-9-42"><a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a> tsn tas max-sdu queue 7 1000
+</span><span id="__span-9-43"><a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a> tsn tas control-list-length 3
+</span><span id="__span-9-44"><a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a> tsn tas control-list index 0 gate-state queue 7 open time-interval 40000000
+</span><span id="__span-9-45"><a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a> tsn tas control-list index 1 gate-state queue 3-6 open time-interval 30000000
+</span><span id="__span-9-46"><a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a> tsn tas control-list index 2 gate-state queue 0-2 open time-interval 30000000
+</span><span id="__span-9-47"><a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a> tsn tas gate-enabled
+</span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a> tsn tas config-change
+</span><span id="__span-9-49"><a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a>!
+</span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>interface vlan 1
+</span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a> ip address 192.168.137.158 255.255.255.0
+</span><span id="__span-9-52"><a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a>!
+</span><span id="__span-9-53"><a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a>end
+</span><span id="__span-9-54"><a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a>#
+</span></code></pre></div><p></p>
+<p>Additional TAS status can be confirmed per-port with <code>show tsn tas status interface GigabitEthernet 1/4</code> </p>
+<h2 id="5-expected-behavior">5 Expected Behavior</h2>
+<p>With TAS correctly isolating the three classes on the 40 ms / 30 ms / 30 ms, 100 ms-cycle schedule (queue 7 → queue 3-6 → queue 0-2), an IO Graph filtered on UDP destination port (1 ms bins) should show, in this fixed order within every 100 ms cycle:</p>
+<ol>
+<li><strong>high_pri</strong>: dense traffic for 40 ms (queue 7 window), then silence for 60 ms</li>
+<li><strong>med_pri</strong>: silence until its 30 ms window opens (queue 3-6, immediately after the high window), then a burst as the buffered queue drains</li>
+<li><strong>low_pri</strong>: silence until its 30 ms window opens (queue 0-2, immediately after the medium window), then a burst as the buffered queue drains</li>
+<li><strong>No sustained overlap</strong> between any two classes in the same 1 ms bin, at most ~1 ms of overlap at each gate transition boundary (frame-in-flight / guard-band edge effect)</li>
+<li>Repeating cleanly every 100 ms once all three talkers are actively streaming</li>
+</ol>
+<p>Pass criteria: Capture 1 (TAS enabled) must reproduce this 40/30/30 ms sequential pattern with ≤2 ms cross-class overlap at boundaries; Capture 2 (TAS disabled) is expected to show no such isolation, confirming the isolation in Capture 1 is attributable to TAS and not to the traffic generator's own pacing.</p>
+<h2 id="6-results">6 Results</h2>
+<h3 id="61-capture-1-tas-enabled">6.1 Capture 1 TAS Enabled</h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-tas-demo-graph.png" data-desc-position="bottom"><img alt="wireshark capture TAS" src="assets/tsn-tas-demo-graph.png"></a></p>
+<p>Verified against the raw capture: steady-state cycles show high_pri occupying a 40 ms window, immediately followed by med_pri for 30 ms, immediately followed by low_pri for 30 ms, then repeating, matching the configured control-list order (queue 7 → queue 3-6 → queue 0-2) and the default PCP-to-queue mapping. Each transition boundary shows ~1 ms of cross-class overlap, consistent with the guard-band edge effect and within the pass criteria above. No priority-7 merge between low and high traffic is observed, confirming the QoS trust-tag fix.</p>
+<h3 id="62-capture-2-tas-disabled-baseline">6.2 Capture 2 TAS Disabled (Baseline)</h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-no-tas-demo.png" data-desc-position="bottom"><img alt="wireshark capture not TAS" src="assets/tsn-no-tas-demo.png"></a></p>
+<p>With TAS disabled, all three streams are interleaved continuously with no gate isolation, as expected for the baseline, confirming that the isolation seen in Capture 1 is produced by TAS.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="tsn-credit-based-haper-%28cbs%29-demo.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: TSN Credit-Based Shaper (CBS)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                TSN Credit-Based Shaper (CBS)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html" class="md-footer__link md-footer__link--next" aria-label="Next: TSN Per-Stream Filtering and Policing (PSFP)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                TSN Per-Stream Filtering and Policing (PSFP)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.footer", "navigation.sections", "navigation.path", "navigation.expand"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/custom.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

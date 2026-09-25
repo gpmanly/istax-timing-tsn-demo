@@ -1,0 +1,1357 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://gpmanly.github.io/istax-timing-tsn-demo/timing-ptp-transparent-clock-demo.html">
+      
+      
+        <link rel="prev" href="timing-ptp-boundary-clock-demo.html">
+      
+      
+        <link rel="next" href="tsn-ptp-%28802.1as%29-demo.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/MCHP.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>PTP Transparent Clock Demo - IStaX Timing and TSN Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/custom.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ptp-p2p-transparent-clock-demo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-header__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IStaX Timing and TSN Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PTP Transparent Clock Demo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-nav__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    IStaX Timing and TSN Demo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timing Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Timing Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-gnss-integration-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GNSS Timing Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g8275.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-itu-t-g.8273.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8273.2 Telecom PTP Performance Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-boundary-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Boundary Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Transparent Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="timing-ptp-transparent-clock-demo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Transparent Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-pcb135-dut1-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 PCB135 (DUT1) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-evb-lan9668-dut2-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 EVB-LAN9668 (DUT2) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-pcb135-check-gnss-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 PCB135, check GNSS lock:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-both-devices-check-port-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Both devices, check port state:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-pcb135-dut1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 PCB135 (DUT1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-evb-lan9668-dut2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 EVB-LAN9668 (DUT2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSN Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Precision Time Protocol (802.1AS/gPTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-traffic-generator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Traffic Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-credit-based-haper-%28cbs%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Credit-Based Shaper (CBS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-time-aware-shaping-%28tas%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Time-Aware Shaping (TAS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Per-Stream Filtering and Policing (PSFP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-pcb135-dut1-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 PCB135 (DUT1) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-evb-lan9668-dut2-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 EVB-LAN9668 (DUT2) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5 Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-pcb135-check-gnss-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 PCB135, check GNSS lock:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-both-devices-check-port-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Both devices, check port state:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-pcb135-dut1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 PCB135 (DUT1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-evb-lan9668-dut2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 EVB-LAN9668 (DUT2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="index.html" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="timing-gnss-integration-demo.html" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Timing Demo
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ptp-p2p-transparent-clock-demo">PTP P2P Transparent Clock Demo</h1>
+<h2 id="1-objective">1 Objective</h2>
+<p>Demonstrate a GNSS-referenced PTP transparent clock that distributes accurate time from DUT1 to DUT2.</p>
+<h2 id="2-topology">2 Topology</h2>
+<p>The topology is NEO-M8T GNSS to PCB135 (DUT1), which acts as a GNSS-slaved transparent clock and grandmaster, then Ethernet PTP to EVB-LAN9668 (DUT2), which acts as a slave transparent clock.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/timing-ptp-demo-block-diagram.png" data-desc-position="bottom"><img alt="Timing PTP Block Diagram" src="assets/timing-ptp-demo-block-diagram.png"></a></p>
+<p>The topology diagram is represented by the topology below.</p>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>NEO-M8T GNSS
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  1PPS  ──► PCB135 io-pin 2  (3.3 V direct, NOT through RS-422)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  NMEA  ──► MAX485 ──► ttyS1 (RS-422, 9600 8N1)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  2 MHz ──► CLK_IN           (SyncE reference)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>PCB135 (DUT1)                    EVB-LAN9668 (DUT2)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>P2P Transparent Clock            P2P Transparent Clock
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>GNSS-disciplined                 SyncE from DUT1
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    Gi 1/4 ──── Cat 5e ──────────── Gi 1/2
+</span></code></pre></div>
+<hr>
+<h2 id="3-pcb135-dut1-configuration">3 PCB135 (DUT1) Configuration</h2>
+<p>Log-in as Admin to PCB135 using <strong><code>ICLI</code></strong>, then configure the following:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Clear all switch configuration back to default but keep the switch's IP address
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp"># </span>reload<span class="w"> </span>defaults<span class="w"> </span>keep-ip<span class="w"> </span>force
+</span></code></pre></div><p></p>
+</div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>SyncE<span class="w"> </span>—<span class="w"> </span><span class="m">2</span><span class="w"> </span>MHz<span class="w"> </span>from<span class="w"> </span>GNSS
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>input-source<span class="w"> </span>2048khz
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>output-source<span class="w"> </span>2048khz
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>clk-source<span class="w"> </span><span class="m">3</span><span class="w"> </span>nominate<span class="w"> </span>clk-in
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>clk-source<span class="w"> </span><span class="m">3</span><span class="w"> </span>ssm-overwrite<span class="w"> </span>prc
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>selector<span class="w"> </span>manual<span class="w"> </span>clk-source<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>PTP<span class="w"> </span>—<span class="w"> </span>P2P<span class="w"> </span>transparent<span class="w"> </span>clock
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mode<span class="w"> </span>p2ptransparent<span class="w"> </span>onestep<span class="w"> </span>ethernet<span class="w"> </span>twoway<span class="w"> </span>vid<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>profile<span class="w"> </span>ieee1588<span class="w"> </span>mep<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>filter-type<span class="w"> </span>basic
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>mode<span class="w"> </span>pps-in<span class="w"> </span><span class="m">2</span><span class="w"> </span>pps-delay<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>virtual-port<span class="w"> </span>tod<span class="w"> </span>ser<span class="w"> </span>proto<span class="w"> </span>rmc
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span>rs422<span class="w"> </span>baudrate<span class="w"> </span><span class="m">9600</span><span class="w"> </span>parity<span class="w"> </span>none<span class="w"> </span>wordlength<span class="w"> </span><span class="m">8</span><span class="w"> </span>stopbits<span class="w"> </span><span class="m">1</span><span class="w"> </span>flowctrl<span class="w"> </span>none
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>PTP<span class="w"> </span>Port<span class="w"> </span>Configuration<span class="w"> </span>on<span class="w"> </span>Gi<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">1</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span><span class="nb">exit</span>
+</span></code></pre></div>
+<hr>
+<h2 id="4-evb-lan9668-dut2-configuration">4 EVB-LAN9668 (DUT2) Configuration</h2>
+<p>Log-in as Admin to EVB-LAN9668 using <strong><code>ICLI</code></strong>, then configure the following:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Clear all switch configuration back to default but keep the switch's IP address
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp"># </span>reload<span class="w"> </span>defaults<span class="w"> </span>keep-ip<span class="w"> </span>force
+</span></code></pre></div><p></p>
+</div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>SyncE<span class="w"> </span>—<span class="w"> </span>from<span class="w"> </span>DUT1<span class="w"> </span>via<span class="w"> </span>Gi<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>clk-source<span class="w"> </span><span class="m">1</span><span class="w"> </span>nominate<span class="w"> </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>network-clock<span class="w"> </span>selector<span class="w"> </span>manual<span class="w"> </span>clk-source<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>PTP<span class="w"> </span>—<span class="w"> </span>P2P<span class="w"> </span>transparent<span class="w"> </span>clock
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>mode<span class="w"> </span>p2ptransparent<span class="w"> </span>onestep<span class="w"> </span>ethernet<span class="w"> </span>twoway<span class="w"> </span>vid<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>profile<span class="w"> </span>ieee1588<span class="w"> </span>mep<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>filter-type<span class="w"> </span>basic
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>!<span class="w"> </span>PTP<span class="w"> </span>Port<span class="w"> </span>Configuration<span class="w"> </span>on<span class="w"> </span>Gi<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>network-clock<span class="w"> </span>synchronization<span class="w"> </span>ssm
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>announce<span class="w"> </span>interval<span class="w"> </span><span class="m">1</span><span class="w"> </span>timeout<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>sync-interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-mechanism<span class="w"> </span>p2p
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>delay-req<span class="w"> </span>interval<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span><span class="nb">exit</span>
+</span></code></pre></div>
+<hr>
+<h2 id="5-verification">5 Verification</h2>
+<h3 id="51-pcb135-check-gnss-lock">5.1 PCB135, check GNSS lock:</h3>
+<p></p><div class="language-console highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp"># </span>show<span class="w"> </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>slave
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Slave port  Slave state    Holdover(ppb)
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>----------  -------------  -------------
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>58          PHASE_LOCKED   N.A.
+</span></code></pre></div><p></p>
+<p></p><div class="language-console highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="gp"># </span>show<span class="w"> </span>ptp<span class="w"> </span><span class="m">0</span><span class="w"> </span>current
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>stpRm  OffsetFromMaster    MeanPathDelay
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>-----  ------------------  ------------------
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>1       0.000,000,012,972   0.000,000,000,000
+</span></code></pre></div>
+<code>stpRm=1</code>, one step removed from the GNSS grandmaster (virtual port). <code>OffsetFromMaster</code> should be single-digit to low-double-digit nanoseconds.<p></p>
+<h3 id="52-both-devices-check-port-state">5.2 Both devices, check port state:</h3>
+<p></p><div class="language-console highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="go">show ptp 0 port-state</span>
+</span></code></pre></div>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Port  Enabled  PTP-State  Internal  Link  Port-Timer  Vlan-forw  Phy-timestamper  Peer-delay
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>----  -------  ---------  --------  ----  ----------  ---------  ---------------  ----------
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>   2  TRUE     p2pt       FALSE     Up    In Sync     Forward    TRUE             OK
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   4  TRUE     p2pt       FALSE     Up    In Sync     Forward    TRUE             OK
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>VirtualPort  Enabled  PTP-State  Io-pin
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>-----------  -------  ---------  ------
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>         58  TRUE     slve            2
+</span></code></pre></div>
+Active ports show <code>p2pt</code>, <code>Link Up</code>, <code>Port-Timer: In Sync</code>, <code>Peer-delay: OK</code>. <code>VirtualPort 58</code> must be <code>slve</code>, not <code>lstn</code>.<p></p>
+<p><strong>EVB-LAN9668</strong> will show <code>FREERUN</code> for <code>show ptp 0 slave</code>, this is correct; it has no independent time reference.
+</p><div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Slave port  Slave state    Holdover(ppb)
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>----------  -------------  -------------
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>0           FREERUN        N.A.
+</span></code></pre></div><p></p>
+<hr>
+<h2 id="6-results">6 Results</h2>
+<h3 id="61-pcb135-dut1">6.1 PCB135 (DUT1)</h3>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Slave port  Slave state    Holdover(ppb)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>----------  -------------  -------------
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>58          PHASE_LOCKED   N.A.
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>stpRm  OffsetFromMaster    MeanPathDelay
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>-----  ------------------  ------------------
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>1       0.000,000,012,972   0.000,000,000,000
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>Port 2: p2pt  Link Up  Port-Timer: In Sync  Peer-delay: OK
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>Port 4: p2pt  Link Up  Port-Timer: In Sync  Peer-delay: OK
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>VirtualPort 58: slve  io-pin 2
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>one_tod_cnt        :           3718
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>one_pps_cnt        :          12066   (≈ 3.35 h uptime × 1 Hz ✓)
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>missed_one_pps_cnt :             35
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>missed_tod_rx_cnt  :           7624   (GNSS fix intermittent — antenna sky-view)
+</span></code></pre></div>
+<p>The GNSS virtual port is phase-locked, and the active P2P ports are in sync with valid peer-delay measurements. The approximately 13 ns offset reported on DUT1 is within the expected single- to low-double-digit nanosecond range. The 1PPS count is consistent with the reported uptime; the missed-pulse and missed-ToD counts indicate intermittent GNSS reception, most likely due to limited antenna sky view, rather than a PTP forwarding problem.</p>
+<h3 id="62-evb-lan9668-dut2">6.2 EVB-LAN9668 (DUT2)</h3>
+<div class="language-text no-copy highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Slave port 0  FREERUN  (expected — no GNSS reference on DUT2)
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Port 2: p2pt  Link Up  Port-Timer: In Sync  Peer-delay: OK
+</span></code></pre></div>
+<p>DUT2 is forwarding PTP as a transparent clock and has no independent GNSS or PTP slave servo, so <code>FREERUN</code> is expected. Its link, timer, and peer-delay states confirm that the P2P exchange is operational. Time accuracy at a downstream endpoint is obtained from the corrected PTP messages and the SyncE frequency reference, rather than from a <code>PHASE_LOCKED</code> state on DUT2 itself.</p>
+<hr>
+<h2 id="7-notes">7 Notes</h2>
+<p><strong>Why both devices are transparent clocks, not boundary clocks:</strong>
+A transparent clock passes PTP frames unchanged except for correcting the switch residence time. Unlike a boundary clock, it does not re-originate timestamps. A chain of transparent clocks adds less error than a chain of boundary clocks, because each TC adds only a small, hardware-measured residence time correction.</p>
+<p><strong>Why GNSS disciplines a transparent clock:</strong>
+PCB135's virtual port locks to the GNSS 1PPS. The TC's own time tracks GPS. When the hardware measures frame residence time it uses the switch LTC, which is GNSS-accurate. The resulting correction field is therefore computed against a GNSS-quality time base, giving a downstream slave a more accurate <code>correctionField</code> than a free-running TC would provide.</p>
+<p><strong>SyncE chain:</strong>
+The 2 MHz input to PCB135 propagates frequency lock via Ethernet to EVB-LAN9668 (<code>network-clock clk-source 1 nominate interface GigabitEthernet 1/2</code>). This is independent of PTP; SyncE distributes frequency accuracy, while PTP distributes phase/time.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="timing-ptp-boundary-clock-demo.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: PTP Boundary Clock Demo">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                PTP Boundary Clock Demo
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-footer__link md-footer__link--next" aria-label="Next: TSN Precision Time Protocol (802.1AS/gPTP)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                TSN Precision Time Protocol (802.1AS/gPTP)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.footer", "navigation.sections", "navigation.path", "navigation.expand"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/custom.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

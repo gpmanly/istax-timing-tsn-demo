@@ -1,0 +1,1620 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://gpmanly.github.io/istax-timing-tsn-demo/tsn-credit-based-haper-%28cbs%29-demo.html">
+      
+      
+        <link rel="prev" href="tsn-traffic-generator.html">
+      
+      
+        <link rel="next" href="tsn-time-aware-shaping-%28tas%29-demo.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/MCHP.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>TSN Credit-Based Shaper (CBS) - IStaX Timing and TSN Demo</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/custom.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tsn-credit-based-shaper-cbs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-header__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IStaX Timing and TSN Demo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TSN Credit-Based Shaper (CBS)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="IStaX Timing and TSN Demo" class="md-nav__button md-logo" aria-label="IStaX Timing and TSN Demo" data-md-component="logo">
+      
+  <img src="assets/MCHP.png" alt="logo">
+
+    </a>
+    IStaX Timing and TSN Demo
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timing Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Timing Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-gnss-integration-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GNSS Timing Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g.8275.1-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.1 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-packet-synce-hybrid-mode-%28nco-assisted%29-g8275.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8275.2 PTP Boundary Clock with SyncE Hybrid Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-itu-t-g.8273.2-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G.8273.2 Telecom PTP Performance Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-boundary-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Boundary Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="timing-ptp-transparent-clock-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PTP Transparent Clock Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Demo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSN Demo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Precision Time Protocol (802.1AS/gPTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-traffic-generator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Traffic Generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Credit-Based Shaper (CBS)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="tsn-credit-based-haper-%28cbs%29-demo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Credit-Based Shaper (CBS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-traffic-generator-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Traffic Generator Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 Traffic Generator Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ep1-low-and-medium-priority-talkers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 EP1 Low and Medium Priority Talkers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ep2-high-priority-talker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 EP2 High Priority Talker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-synchronized-start-and-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Synchronized Start and Stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 TSN Switch Configuration (VSC5641EV)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-qos-requirement-tag-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 QoS Requirement, Tag Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-credit-based-shaper-cbs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Credit-Based Shaper (CBS) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-expected-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Expected Behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-round-1-caps-10-20-60-mbps-queue-7-cap-above-what-the-talker-actually-sends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Round 1, caps 10 / 20 / 60 Mbps (queue 7 cap above what the talker actually sends)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-round-2-caps-10-15-20-mbps-queue-7-cap-now-below-what-the-talker-sends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Round 2, caps 10 / 15 / 20 Mbps (queue 7 cap now below what the talker sends)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-time-aware-shaping-%28tas%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Time-Aware Shaping (TAS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tsn-per-stream-filtering-and-policing-%28psfp%29-demo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSN Per-Stream Filtering and Policing (PSFP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#1-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-test-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Test Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-traffic-generator-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 Traffic Generator Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3 Traffic Generator Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ep1-low-and-medium-priority-talkers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 EP1 Low and Medium Priority Talkers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ep2-high-priority-talker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 EP2 High Priority Talker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-synchronized-start-and-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Synchronized Start and Stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tsn-switch-configuration-vsc5641ev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 TSN Switch Configuration (VSC5641EV)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4 TSN Switch Configuration (VSC5641EV)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-qos-requirement-tag-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 QoS Requirement, Tag Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-credit-based-shaper-cbs-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Credit-Based Shaper (CBS) Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-expected-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Expected Behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-round-1-caps-10-20-60-mbps-queue-7-cap-above-what-the-talker-actually-sends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Round 1, caps 10 / 20 / 60 Mbps (queue 7 cap above what the talker actually sends)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-round-2-caps-10-15-20-mbps-queue-7-cap-now-below-what-the-talker-sends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Round 2, caps 10 / 15 / 20 Mbps (queue 7 cap now below what the talker sends)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="index.html" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="tsn-ptp-%28802.1as%29-demo.html" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    TSN Demo
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tsn-credit-based-shaper-cbs">TSN Credit-Based Shaper (CBS)</h1>
+<h2 id="1-objective">1 Objective</h2>
+<p>Verify that IEEE 802.1Qav Credit-Based Shaping (CBS) on the TSN switch enforces independent, per-queue bandwidth limits (idle slopes) on a single contended egress port, and that each priority class is capped at its own configured rate rather than at a shared or priority-ordered limit.</p>
+<p>With three priority classes (low, medium, high) each offered at 900 Mbps into a single 1 Gbps egress port, confirm that:
+- Each queue settles at its own configured shaper rate, not at a rate set by strict priority order
+- All three classes stay present and interleaved in the shaped output, not time-multiplexed into separate windows
+- The shaped egress rate stays within the sum of the configured per-queue caps</p>
+<h2 id="2-test-topology">2 Test Topology</h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-cbs-demo-block-diagram.png" data-desc-position="bottom"><img alt="Block Diagram" src="assets/tsn-cbs-demo-block-diagram.png"></a></p>
+<ul>
+<li><strong>End Point 1 RPi + LAN9662 (EP1)</strong><ul>
+<li>Port 1: transmits low-priority stream (PCP 0), connected to switch port <strong>Gi1/1</strong></li>
+<li>Port 2: transmits medium-priority stream (PCP 5), connected to switch port <strong>Gi1/2</strong></li>
+</ul>
+</li>
+<li><strong>End Point 2 RPi + LAN9662 (EP2)</strong><ul>
+<li>Port 1: transmits high-priority stream (PCP 7), connected to switch port <strong>Gi1/3</strong></li>
+<li>Port 2: receives merged/shaped traffic, Wireshark capture point, connected to switch port <strong>Gi1/4</strong></li>
+</ul>
+</li>
+<li><strong>TSN Switch (VSC5641EV)</strong><ul>
+<li>All three talker streams ingress on Gi1/1 to Gi1/3 and egress toward EP2 Port 2 through the shaped port, Gi1/4</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-traffic-generator-configuration">3 Traffic Generator Configuration</h2>
+<p>Use the <code>tsn-traffic-gen</code> application described in <a href="tsn-traffic-generator.html">Generating a Traffic Stream</a> to load and run the following configurations. Start the generator on both end points only after the ports, templates, and streams have been reviewed in the TUI.</p>
+<p>The UDP destination port is used as the Wireshark filter to distinguish each captured priority class: <code>10001</code> for high, <code>20001</code> for low, and <code>30001</code> for medium. The corresponding UDP source ports are <code>10000</code>, <code>20000</code>, and <code>30000</code>.</p>
+<p>All three streams are sent to the same destination MAC address, the MAC of EP2 Port 2.</p>
+<h3 id="31-ep1-low-and-medium-priority-talkers">3.1 EP1 Low and Medium Priority Talkers</h3>
+<p>Save the following configuration as <code>tsn-demo-config.ini</code> on EP1:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[global]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">latency_max_ns</span><span class="o">=</span><span class="s">200000</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">measure_ooo</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">stats_samples</span><span class="o">=</span><span class="s">100</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">test_id</span><span class="o">=</span><span class="s">42</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">sync_port</span><span class="o">=</span><span class="s">45900</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">sync_lead_ms</span><span class="o">=</span><span class="s">150</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">[port]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="na">name</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth1</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">[port]</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="na">name</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth2</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">[template]</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="na">name</span><span class="o">=</span><span class="s">lo_pri</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">20000</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">20001</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="k">[template]</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="na">name</span><span class="o">=</span><span class="s">mid_pri</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="na">port</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">5</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">30000</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">30001</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">[stream]</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_lo</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="na">id</span><span class="o">=</span><span class="s">2</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">lo_pri</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="k">[stream]</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_mid</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="na">id</span><span class="o">=</span><span class="s">3</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="na">port</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">mid_pri</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span></code></pre></div>
+<p>Load it from the <code>tsn-traffic-gen</code> repository root:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>./tsn-traffic-gen<span class="w"> </span>-c<span class="w"> </span>tsn-demo-config.ini
+</span></code></pre></div>
+<h3 id="32-ep2-high-priority-talker">3.2 EP2 High Priority Talker</h3>
+<p>Save the following configuration as <code>tas-demo-config.ini</code> on EP2:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[global]</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">latency_max_ns</span><span class="o">=</span><span class="s">200000</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">measure_ooo</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">stats_samples</span><span class="o">=</span><span class="s">100</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">test_id</span><span class="o">=</span><span class="s">42</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">sync_port</span><span class="o">=</span><span class="s">45900</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">sync_lead_ms</span><span class="o">=</span><span class="s">150</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">[port]</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="na">name</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth1</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">[port]</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="na">name</span><span class="o">=</span><span class="s">tx0</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="na">interface</span><span class="o">=</span><span class="s">eth2</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">[template]</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="na">name</span><span class="o">=</span><span class="s">hi_pri</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="na">header_stack</span><span class="o">=</span><span class="s">mac,vlan,ip,udp</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="na">vlan_enabled</span><span class="o">=</span><span class="s">true</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="na">vlan_id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="na">vlan_pcp</span><span class="o">=</span><span class="s">7</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="na">ip_dscp</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="na">ip_ttl</span><span class="o">=</span><span class="s">64</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="na">udp_src_port</span><span class="o">=</span><span class="s">10000</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="na">udp_dst_port</span><span class="o">=</span><span class="s">10001</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="na">data_fill</span><span class="o">=</span><span class="s">random</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="k">[stream]</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="na">name</span><span class="o">=</span><span class="s">stream_hi</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="na">id</span><span class="o">=</span><span class="s">1</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="na">port</span><span class="o">=</span><span class="s">tx</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="na">tx_template</span><span class="o">=</span><span class="s">hi_pri</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="na">mbps</span><span class="o">=</span><span class="s">900</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="na">pps</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="na">packet_size</span><span class="o">=</span><span class="s">1000</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="na">packet_count</span><span class="o">=</span><span class="s">0</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="na">disabled</span><span class="o">=</span><span class="s">false</span>
+</span></code></pre></div>
+<p>Load it from the <code>tsn-traffic-gen</code> repository root:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>./tsn-traffic-gen<span class="w"> </span>-c<span class="w"> </span>tas-demo-config.ini
+</span></code></pre></div>
+<h3 id="33-synchronized-start-and-stop">3.3 Synchronized Start and Stop</h3>
+<p>Both generator instances use the same <code>test_id</code>, <code>sync_port</code>, and <code>sync_lead_ms</code>, allowing EP1 to control a synchronized test:</p>
+<p>PTP is not required for CBS credit accounting itself; it is used here to align the two traffic-generator instances and make timestamps from separate hosts comparable. Use the setup and pass criteria in <a href="tsn-ptp-%28802.1as%29-demo.html">TSN Precision Time Protocol (802.1AS/gPTP)</a> before relying on synchronized launch times.</p>
+<ol>
+<li>Synchronize the system clocks on EP1 and EP2 as described in <a href="tsn-ptp-%28802.1as%29-demo.html">TSN Precision Time Protocol (802.1AS/gPTP)</a>, and confirm that UDP broadcast traffic on port <code>45900</code> can pass between them.</li>
+<li>Load both configurations and leave both TUIs running.</li>
+<li>Start the Wireshark capture on EP2 Port 2.</li>
+<li>On EP1, press uppercase <code>S</code> or select <strong>Sync</strong> to enable the Sync latch.</li>
+<li>On EP1, press lowercase <code>s</code> or select <strong>Start</strong>. EP1 broadcasts the command through its first configured port (<code>eth1</code>), and both instances schedule transmission for the same target time, 150 ms later.</li>
+<li>When the test interval is complete, leave the Sync latch enabled and press <code>s</code> or select <strong>Stop</strong> on EP1 to schedule a synchronized stop on both instances.</li>
+</ol>
+<h2 id="4-tsn-switch-configuration-vsc5641ev">4 TSN Switch Configuration (VSC5641EV)</h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Clear all switch configuration back to default but keep the switch's IP address
+</p><div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp"># </span>reload<span class="w"> </span>defaults<span class="w"> </span>keep-ip<span class="w"> </span>force
+</span></code></pre></div>
+<strong>Apply the <a href="tsn-ptp-%28802.1as%29-demo.html#6-tsn-switch-configuration-vsc5641ev">802.1AS/gPTP Configuration</a></strong><p></p>
+</div>
+<h3 id="41-qos-requirement-tag-classification">4.1 QoS Requirement, Tag Classification</h3>
+<p>Apply Tag Classification</p>
+<p>In the web, navigate to QoS → Port Classification and configure the following:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-qos-conf-1.jpg" data-desc-position="bottom"><img alt="Configuration 1" src="assets/tsn-qos-conf-1.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-qos-conf-3.jpg" data-desc-position="bottom"><img alt="Configuration 1" src="assets/tsn-qos-conf-3.jpg"></a></p>
+<p>Apply on all three talker-facing ingress ports (Gi1/1 to Gi1/3). <code>qos trust tag</code> alone is not enough: the default PCP-to-queue mapping on this switch does not map PCP 0 to queue 0 or PCP 1 to queue 1, so those two mappings need an explicit <code>qos map tag-cos</code> line each, for example on Gi1/1:</p>
+<p>In <strong><code>ICLI</code></strong>, the configuration is as follows:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/1
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="gp">#</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/2
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="gp">#</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/3
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="gp">#</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>trust<span class="w"> </span>tag
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">0</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">0</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">0</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>map<span class="w"> </span>tag-cos<span class="w"> </span>pcp<span class="w"> </span><span class="m">1</span><span class="w"> </span>dei<span class="w"> </span><span class="m">1</span><span class="w"> </span>cos<span class="w"> </span><span class="m">1</span><span class="w"> </span>dpl<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span><span class="nb">exit</span>
+</span></code></pre></div>
+<p>The same four <code>qos map tag-cos</code> lines go on Gi1/2 and Gi1/3 as well, since all three talker ports need the same PCP-to-queue mapping. With this in place, low (PCP 0) goes to queue 0, medium (PCP 5) and high (PCP 7) go to queue 5 and queue 7 as expected without needing an explicit map, since PCP 5 and PCP 7 already map to their matching queue by default. Without <code>trust tag</code>, every stream lands in queue 0 and the three classes collapse together before reaching Gi1/4. <code>trust tag</code> and these maps are only needed on the ingress ports; Gi1/4 only sends traffic out in this test, so it does not need them.</p>
+<h3 id="42-credit-based-shaper-cbs-configuration">4.2 Credit-Based Shaper (CBS) Configuration</h3>
+<p>In the web, navigate to QoS → Port Shaping and configure the following:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-cbs-conf-1.jpg" data-desc-position="bottom"><img alt="Configuration 1" src="assets/tsn-cbs-conf-1.jpg"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-cbs-conf-2.jpg" data-desc-position="bottom"><img alt="Configuration 1" src="assets/tsn-cbs-conf-2.jpg"></a></p>
+<p>CBS is configured on the egress port, Gi1/4. This is the current, live config on the switch, confirmed with <code>show running-config interface GigabitEthernet 1/4</code>:</p>
+<p>In <strong><code>ICLI</code></strong>, the configuration is as follows:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp"># </span>configure<span class="w"> </span>terminal
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="gp gp-VirtualEnv">(config)</span><span class="gp"># </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>switchport<span class="w"> </span>hybrid<span class="w"> </span>egress-tag<span class="w"> </span>all
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>queue-shaper<span class="w"> </span>queue<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">10</span><span class="w"> </span>mbps<span class="w"> </span>credit
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>queue-shaper<span class="w"> </span>queue<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">15</span><span class="w"> </span>mbps<span class="w"> </span>credit
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>qos<span class="w"> </span>queue-shaper<span class="w"> </span>queue<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="m">20</span><span class="w"> </span>mbps<span class="w"> </span>credit<span class="w"> </span>rate-type<span class="w"> </span>data
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="gp gp-VirtualEnv">(config-if)</span><span class="gp"># </span>end
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>PCP</th>
+<th>Queue</th>
+<th>Shaper rate</th>
+<th>Rate-type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low</td>
+<td>0</td>
+<td>0</td>
+<td>10 Mbps</td>
+<td>line</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>5</td>
+<td>5</td>
+<td>15 Mbps</td>
+<td>line</td>
+</tr>
+<tr>
+<td>High</td>
+<td>7</td>
+<td>7</td>
+<td>20 Mbps</td>
+<td>line</td>
+</tr>
+</tbody>
+</table>
+<p><code>rate-type</code> controls whether the shaper counts the roughly 20-byte preamble/gap overhead per frame (<code>line</code>, the default) or leaves it out (<code>data</code>). For 1000-byte payloads that is only about a 2% difference, small enough that it does not change the results below. It is called out here only because queue 7 is set differently from queues 0 and 5 in the live config.</p>
+<p>Each <code>qos queue-shaper queue &lt;n&gt; &lt;rate&gt; credit</code> line sets that queue's allowed long-run rate. While the queue has traffic queued, it spends credit at that rate, capping its output no matter how much is offered to it.</p>
+<h2 id="5-expected-behavior">5 Expected Behavior</h2>
+<p><strong>Check the ingress rate first</strong>, before looking at the egress rate. A queue's shaped output only proves anything if that queue was actually offered more than its cap. Steps, per queue under test:</p>
+<ol>
+<li>Clear counters on the talker's ingress port and on Gi1/4:
+    <div class="language-console highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp"># </span>clear<span class="w"> </span>statistics<span class="w"> </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/3<span class="w"> </span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="gp"># </span>clear<span class="w"> </span>statistics<span class="w"> </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4
+</span></code></pre></div></li>
+<li>Let traffic run for a fixed, known duration (15 seconds is enough), then read both counters in the same way, again bracketed with <code>date</code>:
+    <div class="language-console highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="gp"># </span>show<span class="w"> </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/3<span class="w"> </span>statistics<span class="w"> </span>priority<span class="w"> </span><span class="m">7</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="gp"># </span>show<span class="w"> </span>interface<span class="w"> </span>GigabitEthernet<span class="w"> </span><span class="m">1</span>/4<span class="w"> </span>statistics<span class="w"> </span>priority<span class="w"> </span><span class="m">7</span>
+</span></code></pre></div></li>
+<li>Take the ingress port's Rx count for that priority, divide by the elapsed seconds between the two <code>date</code> calls, and convert to Mbps (roughly frames/sec times 8400 bits/frame for 1000-byte payloads).</li>
+<li>Compare that ingress rate to the queue's configured cap:<ul>
+<li>If ingress is <strong>above</strong> the cap, the queue's egress rate is a real test of the shaper, proceed to compare egress against cap as in the rounds below.</li>
+<li>If ingress is <strong>at or below</strong> the cap, stop, the shaper has nothing to do here. Either raise the traffic generator's rate for that stream, or lower the queue's shaper cap below the observed ingress rate, then repeat from step 1. Do not read the egress number as a pass or fail in this case.</li>
+</ul>
+</li>
+</ol>
+<p>Once ingress is confirmed above the cap, compare the egress (shaped) count from the same window against the cap:</p>
+<ol>
+<li>Low (queue 0) should settle near 10 Mbps</li>
+<li>Medium (queue 5) should settle near 15 Mbps</li>
+<li>High (queue 7) should settle near 20 Mbps, but only if it is actually offered more than 20 Mbps in that window</li>
+<li>All three classes present at the same time, not gated into separate windows</li>
+<li>Combined egress rate should approach but not exceed 45 Mbps (10 + 15 + 20) once all three queues are saturated</li>
+</ol>
+<h2 id="6-results">6 Results</h2>
+<p>Instead of relying only on a downstream Wireshark capture, each round below reads the switch's own counters directly: ingress counters on the talker port (what was offered, before the switch does anything) and egress counters on Gi1/4 (what actually got shaped out). Each round clears the counters, waits a known amount of time, then reads them, with the clear and the read timestamped in the same shell command so the window length is known exactly instead of assumed.</p>
+<h3 id="61-round-1-caps-10-20-60-mbps-queue-7-cap-above-what-the-talker-actually-sends">6.1 Round 1, caps 10 / 20 / 60 Mbps (queue 7 cap above what the talker actually sends)</h3>
+<table>
+<thead>
+<tr>
+<th>Queue</th>
+<th>Ingress (offered)</th>
+<th>Egress (shaped)</th>
+<th>Cap</th>
+<th>% of cap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low (0)</td>
+<td>~102.1 Mbps</td>
+<td>~10.4 Mbps</td>
+<td>10 Mbps</td>
+<td>104%</td>
+</tr>
+<tr>
+<td>Medium (5)</td>
+<td>~102.3 Mbps</td>
+<td>~20.1 Mbps</td>
+<td>20 Mbps</td>
+<td>101%</td>
+</tr>
+<tr>
+<td>High (7)</td>
+<td>~35.1 Mbps</td>
+<td>~34.1 Mbps</td>
+<td>60 Mbps</td>
+<td>57%</td>
+</tr>
+</tbody>
+</table>
+<p>Low and medium are offered around 102 Mbps and both clamp to within about 4% of their caps, a clean pass. High's ingress and egress are almost identical (35.1 to 34.1 Mbps), meaning the queue passes through basically unshaped. That is because the talker itself never sends more than about 35 Mbps, well under the 60 Mbps cap, so the shaper has nothing to do. The low 57% number reflects that the talker did not offer enough load, not a shaping problem.</p>
+<h3 id="62-round-2-caps-10-15-20-mbps-queue-7-cap-now-below-what-the-talker-sends">6.2 Round 2, caps 10 / 15 / 20 Mbps (queue 7 cap now below what the talker sends)</h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/tsn-cbs-demo-graph.jpg" data-desc-position="bottom"><img alt="cbs-graph" src="assets/tsn-cbs-demo-graph.jpg"></a></p>
+<table>
+<thead>
+<tr>
+<th>Queue</th>
+<th>Ingress (offered)</th>
+<th>Egress (shaped)</th>
+<th>Cap</th>
+<th>% of cap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low (0)</td>
+<td>~101.1 Mbps</td>
+<td>~10.4 Mbps</td>
+<td>10 Mbps</td>
+<td>104%</td>
+</tr>
+<tr>
+<td>Medium (5)</td>
+<td>~101.3 Mbps</td>
+<td>~15.3 Mbps</td>
+<td>15 Mbps</td>
+<td>102%</td>
+</tr>
+<tr>
+<td>High (7)</td>
+<td>~43.9 Mbps</td>
+<td>~17.3 Mbps</td>
+<td>20 Mbps</td>
+<td>87%</td>
+</tr>
+</tbody>
+</table>
+<p>With the queue 7 cap lowered to 20 Mbps, below the talker's offered rate in this window (about 43.9 Mbps), the shaper now clamps the queue down to about 17.3 Mbps, the same active-shaping behavior seen on low and medium. This confirms Round 1's shortfall was simply because the talker was not offering enough load, not a switch problem: lowering the cap below the offered rate is enough to reproduce the same clamping seen on the other two queues.</p>
+<p><strong>High talker is bursty.</strong> Across consecutive ~15 second windows, with nothing changed on the traffic generator, the high talker's own ingress rate measured about 4.5 Mbps, then 35 Mbps, then 43.9 Mbps. The high-priority talker (EP2 Port 1) and the Wireshark capture point (EP2 Port 2) are the same RPi and LAN9662 box, so it is likely CPU-limited by sharing that box with the capture process, which would explain the bursty rather than steady output. This matches the packet-timing jitter seen in the original capture, where queue 7's spacing was about twice as jittery as low and medium's, a sign of raw, unsmoothed talker output rather than a shaper-metered cadence.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="tsn-traffic-generator.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: TSN Traffic Generator">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                TSN Traffic Generator
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="tsn-time-aware-shaping-%28tas%29-demo.html" class="md-footer__link md-footer__link--next" aria-label="Next: TSN Time-Aware Shaping (TAS)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                TSN Time-Aware Shaping (TAS)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.copy", "navigation.footer", "navigation.sections", "navigation.path", "navigation.expand"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/custom.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
