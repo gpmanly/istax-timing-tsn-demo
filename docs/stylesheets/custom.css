@@ -18,11 +18,6 @@
 
 .md-content {
   border-left: 1px solid rgba(0, 0, 0, 0.08);
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.md-grid {
-  max-width: 75%; 
 }
 
 /* ---- LIGHT MODE ---- */
@@ -39,15 +34,15 @@
   --md-accent-bg-color--light:       #FFFFFF;
 
   /* Typeset (link) accent */
-  --md-typeset-a-color:              #1C355E;
+  --md-typeset-a-color:              #41B6E6;
 }
 
 /* ---- DARK MODE (slate) ---- */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:             #101820; /* Black 6C as dark surface */
+  --md-primary-fg-color:             #1C355E; /* Black 6C as dark surface */
   --md-primary-fg-color--light:      #1C355E;
   --md-primary-fg-color--dark:       #000000;
-  --md-primary-bg-color:             #F68D2E; /* orange for contrast on dark header */
+  --md-primary-bg-color:             #FFFFFF; /* orange for contrast on dark header */
 
   --md-accent-fg-color:              #41B6E6; /* Pantone 298C - lighter blue reads better on dark */
   --md-accent-fg-color--transparent: #41B6E61a;
@@ -62,5 +57,4 @@
 
 [data-md-color-scheme="slate"] .md-content {
   border-left: 1px solid rgba(255, 255, 255, 0.08);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
